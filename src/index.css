@@ -1,0 +1,27 @@
+html.page-scroller-enabled, .page-scroller-enabled body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.page-scoller-body {
+    height: 100%;
+    position: relative;
+}
+
+.page-scroller-wrapper {
+    height: 100%;
+    position: relative;
+    transition: .7s ease;
+    -webkit-transition: .7s ease;
+}
+
+.page-scroller-section {
+    height: 100%;
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
