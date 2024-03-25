@@ -1,6 +1,6 @@
-import { state } from "../../src/state/state";
+import { state } from "../../state";
 import { initializeTest } from "../utils";
-import { registerTouchEvents, destroyTouchEvents, onTouchStartHandler, touchStartCoordinates, getEventCoordinated } from "../../src/events/touch.event";
+import { registerTouchEvents, destroyTouchEvents, onTouchStartHandler, touchStartCoordinates, getEventCoordinated } from "../../events/touch.event";
 
 describe("Touch Events", () => {
     let touchStartHandler: any;

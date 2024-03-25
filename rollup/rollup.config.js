@@ -3,7 +3,6 @@ import pkg from "../package.json";
 import { rollupConfigCreator } from "./rollup-config-creator";
 
 const name = "index";
-
 const options = [
     {
         name,

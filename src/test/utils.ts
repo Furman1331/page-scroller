@@ -1,4 +1,4 @@
-import { state } from "../src/state/state";
+import { state } from "../state/state";
 
 export function initializeTest() {
     document.body.innerHTML = `

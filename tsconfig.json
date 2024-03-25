@@ -15,6 +15,6 @@
         "declarationMap": true,
         "types": ["jest", "node"],
     },
-    "include": ["src", "test"],
+    "include": ["src", "src/test"],
     "exclude": ["node_modules", "dist"]
 }
