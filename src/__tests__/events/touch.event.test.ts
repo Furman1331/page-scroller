@@ -1,5 +1,5 @@
 import { state } from "../../state";
-import { initializeTest } from "../utils";
+import { initializeTest } from "../utils/utils";
 import { registerTouchEvents, destroyTouchEvents, onTouchStartHandler, touchStartCoordinates, getEventCoordinated } from "../../events/touch.event";
 
 describe("Touch Events", () => {

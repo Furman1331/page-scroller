@@ -3,7 +3,7 @@ import { ScrollDirection } from "./scroll";
 import type { onSectionChangeProps } from "./emitter";
 
 export interface usePageScrollerOptions {
-    isDebug: boolean;
+    isDebug?: boolean;
     isWheelEnabled?: boolean;
     isKeyboardEnabled?: boolean;
     isTouchEnabled?: boolean;
