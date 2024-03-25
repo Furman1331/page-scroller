@@ -62,7 +62,7 @@ function keyDownEventHandler(event: KeyboardEvent) {
  * Prevent page break when the tab key is pressed.
  * @param event - The keyboard event.
  */
-function onTabPress(event: KeyboardEvent) {
+export function onTabPress(event: KeyboardEvent) {
     const isShiftPressed = event.shiftKey;
     const activeElement = document.activeElement;
     const focusableElements = getFocusableElements(state.sections[state.activeSectionIndex]);

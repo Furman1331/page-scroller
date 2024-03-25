@@ -1,6 +1,6 @@
-import { state } from "./state/state";
+import { state } from "../state/state";
 
-import type { LoggerType, useLoggerReturn } from "./types";
+import type { LoggerType, useLoggerReturn } from "../types";
 
 export function useLogger(): useLoggerReturn {
     function info(message: string) {

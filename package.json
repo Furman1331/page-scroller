@@ -1,7 +1,7 @@
 {
   "name": "page-scroller",
   "version": "0.0.1",
-  "description": "",
+  "description": "Amazing plugin for creating smooth scroll on your website",
   "source": "src/index.ts",
   "main": "dist/index.cjs.js",
   "types": "dist/index.d.ts",
@@ -17,8 +17,12 @@
     "build": "npm run test && rollup -c ./rollup/rollup.config.js",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "scroll",
+    "typescript"
+  ],
+  "author": "<michalfurmanczak@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-terser": "^0.4.4",
@@ -33,8 +37,5 @@
     "rollup-plugin-typescript2": "^0.36.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "tiny-emitter": "^2.1.0"
   }
 }

@@ -13,8 +13,6 @@ html.page-scroller-enabled, .page-scroller-enabled body {
 .page-scroller-wrapper {
     height: 100%;
     position: relative;
-    transition: .7s ease;
-    -webkit-transition: .7s ease;
 }
 
 .page-scroller-section {

@@ -25,9 +25,9 @@ export function changeSectionBySpecificIndex(index: number) {
 
     const currentSectionIndex = state.activeSectionIndex;
 
-    state.sections[currentSectionIndex].classList.remove(ClassName.activeSection);
-
     if(!isAllowToChangeByIndex(index)) return state.isScrolling = false;
+
+    state.sections[currentSectionIndex].classList.remove(ClassName.activeSection);
 
     state.activeSectionIndex = index;
 
@@ -35,6 +35,8 @@ export function changeSectionBySpecificIndex(index: number) {
 }
 
 function changeSection(previousIndex: number, nextIndex: number) {
+    emitter.emit(EmitterEvents.onBeforeSectionChange, { prevIndex: previousIndex, currentIndex: nextIndex });
+
     state.sections[previousIndex].classList.remove(ClassName.activeSection);
 
     const sectionOffset = state.sections[nextIndex].offsetTop;
@@ -49,7 +51,7 @@ function changeSection(previousIndex: number, nextIndex: number) {
     setTimeout(() => {
         state.isScrolling = false;
 
-        emitter.emit(EmitterEvents.onSectionChange);
+        emitter.emit(EmitterEvents.onSectionChange, { prevIndex: previousIndex, currentIndex: nextIndex });
     }, 700);
 }
 

@@ -1,3 +1,2 @@
-export * from "./logger";
-export * from "./common/scroll";
+export * from "./page-scroller";
 export * from "./usePageScroller";

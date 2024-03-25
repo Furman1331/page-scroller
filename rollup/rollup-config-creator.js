@@ -18,11 +18,7 @@ export function rollupConfigCreator(options, callback) {
             name: 'Page Scroller',
             sourcemap: true,
             exports: 'named',
-            globals: {
-                "tiny-emitter": "tinyEmitter"
-            }
         },
-        external: ["tiny-emitter"],
         plugins: [
             external(),
             postcss({ extensions: ['.css'] }),

@@ -16,9 +16,17 @@ function prepareDOM() {
     const bodyElement = document.querySelector("body");
     bodyElement.classList.add(ClassName.body);
 
-    state.container.classList.add(ClassName.container);
+    prepareContainer();
 
     prepareSections();
+}
+
+function prepareContainer() {
+    state.container.classList.add(ClassName.container);
+
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+
+    state.container.style.transition = transition;
 }
 
 function prepareSections() {

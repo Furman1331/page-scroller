@@ -23,7 +23,7 @@ export function onTouchStartHandler(event: TouchEvent) {
     }
 }
 
-function onTouchMoveHandler(event: TouchEvent): void {
+export function onTouchMoveHandler(event: TouchEvent): void {
     const coordinates = getEventCoordinated(event);
 
     const isVerticalMovementEnought = Math.abs(coordinates.y - touchStartCoordinates.y) > (window.innerHeight / 100 * 5);
@@ -35,7 +35,7 @@ function onTouchMoveHandler(event: TouchEvent): void {
     }
 }
 
-function getEventCoordinated(event: TouchEvent): Coordinates {
+export function getEventCoordinated(event: TouchEvent): Coordinates {
     return {
         x: event.touches[0].pageX,
         y: event.touches[0].pageY

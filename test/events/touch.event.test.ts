@@ -1,6 +1,6 @@
 import { state } from "../../src/state/state";
 import { initializeTest } from "../utils";
-import { registerTouchEvents, destroyTouchEvents, onTouchStartHandler, touchStartCoordinates } from "../../src/events/touch.event";
+import { registerTouchEvents, destroyTouchEvents, onTouchStartHandler, touchStartCoordinates, getEventCoordinated } from "../../src/events/touch.event";
 
 describe("Touch Events", () => {
     let touchStartHandler: any;
@@ -61,22 +61,11 @@ describe("Touch Events", () => {
         expect(touchStartCoordinates).toEqual({ x: 10, y: 20 });
     });
 
-    // test("onTouchMoveHandler should call changeSectionByDirection if vertical movement is enough", () => {
-    //     const event = initializeTouchEvent();
-    //     touchStartCoordinates = { x: 10, y: 30 };
-    //     const changeSectionByDirection = jest.fn();
-    //     global.window.innerHeight = 1000;
-    //     Math.abs = jest.fn().mockReturnValue(100);
-    //     onTouchMoveHandler(event);
-    //     expect(changeSectionByDirection).toHaveBeenCalledWith("up");
-    // });
-
-    // test("getEventCoordinated should return coordinates from TouchEvent", () => {
-    //     const event = new TouchEvent("touchmove");
-    //     event.touches = [{ pageX: 10, pageY: 20 }];
-    //     const coordinates = getEventCoordinated(event);
-    //     expect(coordinates).toEqual({ x: 10, y: 20 });
-    // })
+    test("getEventCoordinated should return coordinates from TouchEvent", () => {
+        const event = initializeTouchEvent();
+        const coordinates = getEventCoordinated(event);
+        expect(coordinates).toEqual({ x: 10, y: 20 });
+    })
 
     function initializeTouchEvent() {
         return new TouchEvent("touchstart", { touches: [{
