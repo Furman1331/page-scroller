@@ -33,7 +33,7 @@ export const callback = new Callback();
  * @param options - The options for the page scroller.
  */
 export function assignState(options: usePageScrollerOptions) {
-    state.isDebug = options.isDebug;
+    state.isDebug = options.isDebug ?? false;
     state.isWheelEnabled = options.isWheelEnabled ?? true;
     state.isKeyboardEnabled = options.isKeyboardEnabled ?? true;
     state.isTouchEnabled = options.isTouchEnabled ?? true;

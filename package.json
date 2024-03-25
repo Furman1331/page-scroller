@@ -1,6 +1,6 @@
 {
-  "name": "page-scroller",
-  "version": "0.0.1",
+  "name": "@furman1331/page-scroller",
+  "version": "0.0.2",
   "description": "Amazing plugin for creating smooth scroll on your website",
   "source": "src/index.ts",
   "main": "dist/index.cjs.js",
@@ -19,8 +19,16 @@
   },
   "keywords": [
     "scroll",
-    "typescript"
+    "typescript",
+    "fullscreen website",
+    "fullscreen",
+    "onepage",
+    "single page"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Furman1331/page-scroller"
+  },
   "author": "<michalfurmanczak@gmail.com>",
   "license": "MIT",
   "devDependencies": {
