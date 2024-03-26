@@ -1,7 +1,6 @@
-import { EmitterEvents, emitter } from "../emitter";
-import { onSectionChangeProps, usePageScrollerOptions } from "../types";
+import { onSectionChangeProps } from "../types";
 
-class State {
+export class State {
     container: HTMLElement | null = null;
     sections: HTMLElement[] | null = null;
 
@@ -22,37 +21,8 @@ class State {
 
 class Callback {
     onSectionChange: (props: onSectionChangeProps) => unknown;
-    onBeforeSectionChange: Function;
+    onBeforeSectionChange: (props: onSectionChangeProps) => unknown;
 }
 
 export const state = new State();
 export const callback = new Callback();
-
-/**
- * Assigns the state options for the page scroller.
- * @param options - The options for the page scroller.
- */
-export function assignState(options: usePageScrollerOptions) {
-    state.isDebug = options.isDebug ?? false;
-    state.isWheelEnabled = options.isWheelEnabled ?? true;
-    state.isKeyboardEnabled = options.isKeyboardEnabled ?? true;
-    state.isTouchEnabled = options.isTouchEnabled ?? true;
-
-    state.transitionTimingFunction = options.transitionTimingFunction ??  "ease";
-
-    state.scrollingSpeed = options.scrollingSpeed ?? 700;
-}
-
-export function registerCallbacks(options: usePageScrollerOptions) {
-    if(options.onSectionChange) {
-        callback.onSectionChange = options.onSectionChange;
-
-        emitter.on(EmitterEvents.onSectionChange, (event: onSectionChangeProps) => callback.onSectionChange(event));
-    }
-
-    if(options.onBeforeSectionChange) {
-        callback.onBeforeSectionChange = options.onBeforeSectionChange;
-
-        emitter.on(EmitterEvents.onBeforeSectionChange, (event: unknown) => callback.onBeforeSectionChange(event));
-    }
-}

@@ -1,6 +1,6 @@
 import { useLogger } from "./logger";
-import { assignState, registerCallbacks, state } from "./state/state";
-import { initializePageScroller, changeSectionBySpecificIndex, changeSectionByDirection } from "./common";
+import { state } from "./state/state";
+import { changeSectionBySpecificIndex, changeSectionByDirection, onInitialize } from "./common";
 
 import type { usePageScrollerOptions, usePageScrollerReturn } from "./types";
 
@@ -20,11 +20,7 @@ export function usePageScroller(options?: usePageScrollerOptions): usePageScroll
 
         if(!state.container) throw new Error(logger.createMessage("Container not found. Please provide a valid selector."));
 
-        if (options) assignState(options);
-
-        if (options) registerCallbacks(options);
-
-        initializePageScroller();
+        onInitialize(options);
     }
 
     return { initPageScroller, changeSectionByDirection, changeSectionBySpecificIndex };

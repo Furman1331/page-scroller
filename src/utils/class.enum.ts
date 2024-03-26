@@ -3,6 +3,5 @@ export enum ClassName {
     body = "page-scoller-body",
     container = "page-scroller-wrapper",
     section = "page-scroller-section",
-    slide = "page-scoller-slide",
     activeSection = "page-scroller-section-active"
 }

@@ -1,0 +1,44 @@
+import { state } from "../state";
+
+import { useLogger } from "../logger";
+import { initializeDOM, destroyDOM } from "./dom";
+import { destroyEvents, registerEvents } from "../events";
+import { initializeCallbacks, initializeState, destroyState, destroyCallbacks } from "./state";
+
+import type { usePageScrollerOptions } from "../types";
+
+const logger = useLogger();
+
+export function onInitialize(options?: usePageScrollerOptions) {
+    logger.info("Initializing Page Scroller...");
+
+    if(options) {
+        initializeState(options);
+
+        initializeCallbacks(options);
+    }
+
+    initializeDOM();
+
+    registerEvents();
+
+    state.isInitialized = true;
+
+    logger.info("Initialized Page Scroller.");
+}
+
+export function onDestroy() {
+    logger.warn("Destroying Page Scroller...");
+
+    destroyDOM();
+
+    destroyEvents();
+
+    destroyState();
+
+    destroyCallbacks();
+
+    state.isInitialized = false;
+
+    logger.warn("Destroyed Page Scroller.");
+}

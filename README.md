@@ -27,57 +27,60 @@ usePageScroller().initPageScroller("#page-scroller");
 </div>
 ```
 
-## Configuration
-
-The completed fields have default value of properties. You can left it empty if you want to use default values.
-
-```javascript
-usePageScroller({
-    isDebug: false; // Disable/Enable debug
-    isWheelEnabled: true; // Enable trigger by mouse wheel
-    isKeyboardEnabled: true; // Enable trigger by keyboard
-    isTouchEnabled: true; // Enable trigger by touch ( on touch screens )
-
-    transitionTimingFunction?: string;
-
-    scrollingSpeed: 700; // Speed of changing slides.
-
-    onSectionChange?: (props: onSectionChangeProps) => unknown; // Function called after slide changed
-    onBeforeSectionChange?: (props: onSectionChangeProps) => unknown; // Function called before slide changed
-}).initPageScroller("#page-scroller");
-```
-
-## API
+## Methods
 It's available in whole project so you can execure it in different places.
 
-- changeSectionBySpecificIndex -  Change slide to specific index. Slides start from 0 to the amount you have in the project
-- changeSectionByDirection - Change slide by direction, parameter could be: "down" | "up"
-- getActiveSlide - Current slide index number.
+#### changeSectionBySpecificIndex()
+Change section to specific index. sections start from 0 to the amount you have in the project
+
+#### changeSectionByDirection()
+Change section by direction, parameter could be: "down" | "up"
+
+#### getActiveSection()
+Current section index number.
+
+### onDestroy()
+Destroy Page Scroller Plugin
 
 Examples:
 ```javascript
 import { changeSectionBySpecificIndex } from "@furman1331/page-scroller";
 
-const changeSlideToContact = () => changeSectionBySpecificIndex(3); // In this case Contact Slide is the 4th.
+const changeSectionToContact = () => changeSectionBySpecificIndex(3); // In this case Contact Section is the 4th.
 ```
 
 ```javascript
 import { changeSectionByDirection } from "@furman1331/page-scroller";
 
-const changeSlideToContact = () => changeSectionByDirection("down"); // Slide down
+const changeSectionDown = () => changeSectionByDirection("down"); // Section down
 ```
 
 ```javascript
 import { changeSectionByDirection } from "@furman1331/page-scroller";
 
-const changeSlideToContact = () => changeSectionByDirection("up"); // Slide up
+const changeSectionUp = () => changeSectionByDirection("up"); // Section up
 ```
 
 ```javascript
-import { getActiveSlide } from "@furman1331/page-scroller";
+import { getActiveSection } from "@furman1331/page-scroller";
 
-console.log(getActiveSlide) // It will console log active slide index.
+console.log(getActiveSection) // It will console log active section index.
 ```
+
+## Options
+
+- `scrollingSpeed`: (default: 700) Defines the scrolling speed in milliseconds.
+
+- `transitionTimingFunction`: (default: "ease") Defines the transition effect to use for changing sections.
+
+- `isDebug`: (default: `false`) Defines status of debug logs
+
+- `isWheelEnabled`: (default: `true`) Defines status of the possibility of scrolling through sections using mouse wheel.
+
+- `isKeyboardEnabled`: (default: `true`) Defines status of the possibility of scrolling through sections using Keyboard.
+
+- `isTouchEnabled`: (default: `true`) Defines status of the possibility of scrolling through sections using Touch screen.
+
 
 ## License
 

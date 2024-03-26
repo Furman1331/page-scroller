@@ -1,2 +1,2 @@
 export * from "./scroll";
-export * from "./initialization";
+export * from "./instance";
