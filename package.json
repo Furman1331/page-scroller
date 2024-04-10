@@ -1,6 +1,6 @@
 {
   "name": "@furman1331/page-scroller",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Amazing plugin for creating smooth scroll on your website",
   "source": "src/index.ts",
   "main": "dist/index.cjs.js",

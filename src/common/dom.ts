@@ -17,6 +17,8 @@ export function initializeDOM() {
     state.sections = [].slice.call(state.container.children);
 
     state.sections.forEach((section) => section.classList.add(ClassName.section));
+
+    state.scrollMode === "automatic" ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
 }
 
 export function destroyDOM() {
@@ -38,6 +40,11 @@ export function prepareScrollModeAutomaticDOM() {
 
     bodyElement.style.overflow = "hidden";
     bodyElement.style.height = "100%";
+
+    const htmlElement = document.querySelector("html");
+
+    htmlElement.style.overflow = "hidden";
+    htmlElement.style.height = "100%";
 }
 
 export function prepareScrollModeManualDOM() {
@@ -45,4 +52,9 @@ export function prepareScrollModeManualDOM() {
 
     bodyElement.style.overflow = "auto";
     bodyElement.style.height = "initial";
+
+    const htmlElement = document.querySelector("html");
+
+    htmlElement.style.overflow = "auto";
+    htmlElement.style.height = "initial";
 }
