@@ -32,3 +32,17 @@ export function destroyDOM() {
 
     state.sections.forEach((section) => section.classList.remove(ClassName.section));
 }
+
+export function prepareScrollModeAutomaticDOM() {
+    const bodyElement = document.querySelector("body");
+
+    bodyElement.style.overflow = "hidden";
+    bodyElement.style.height = "100%";
+}
+
+export function prepareScrollModeManualDOM() {
+    const bodyElement = document.querySelector("body");
+
+    bodyElement.style.overflow = "auto";
+    bodyElement.style.height = "initial";
+}

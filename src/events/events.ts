@@ -8,6 +8,8 @@ import { destroyTouchEvents, registerTouchEvents } from "./touch.event";
  * Registers the events for the page scroller.
  */
 export function registerEvents() {
+    if(state.scrollMode === "manual") return;
+
     state.isWheelEnabled && registerWheelEvent();
     state.isKeyboardEnabled && registerKeyboardEvents();
     state.isTouchEnabled && registerTouchEvents();

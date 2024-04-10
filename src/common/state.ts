@@ -4,6 +4,7 @@ import { emitter, EmitterEvents } from "../emitter";
 import type { onSectionChangeProps, usePageScrollerOptions } from "../types";
 
 const defaultState: usePageScrollerOptions = {
+    scrollMode: "automatic",
     scrollingSpeed: 700,
     transitionTimingFunction: "ease",
 
@@ -14,6 +15,7 @@ const defaultState: usePageScrollerOptions = {
 }
 
 export function initializeState(options: usePageScrollerOptions) {
+    state.scrollMode = options.scrollMode ?? defaultState.scrollMode;
     state.scrollingSpeed = options.scrollingSpeed ?? defaultState.scrollingSpeed;
     state.transitionTimingFunction = options.transitionTimingFunction ?? defaultState.transitionTimingFunction;
 
@@ -27,19 +29,19 @@ export function destroyState() {
     state.container = null;
     state.sections = null;
 
-    state.activeSectionIndex = 0;
+    state.activeSection = 0;
 
     state.transitionTimingFunction = "ease";
 
-    state.scrollingSpeed = 700;
+    state.scrollingSpeed = defaultState.scrollingSpeed;
 
-    state.isDebug = false;
+    state.isDebug = defaultState.isDebug;
     state.isScrolling = false;
     state.isInitialized = false;
 
-    state.isWheelEnabled = true;
-    state.isKeyboardEnabled = true;
-    state.isTouchEnabled = true;
+    state.isWheelEnabled = defaultState.isWheelEnabled;
+    state.isKeyboardEnabled = defaultState.isKeyboardEnabled;
+    state.isTouchEnabled = defaultState.isTouchEnabled;
 }
 
 export function initializeCallbacks(options: usePageScrollerOptions) {

@@ -9,13 +9,13 @@ export function changeSectionByDirection(direction: ScrollDirection) {
 
     state.isScrolling = true;
 
-    const currentSectionIndex = state.activeSectionIndex;
+    const currentSectionIndex = state.activeSection;
 
     if(!isAllowToChangeSection(direction)) return state.isScrolling = false;
 
-    state.activeSectionIndex = direction === "down" ? currentSectionIndex + 1 : currentSectionIndex - 1;
+    state.activeSection = direction === "down" ? currentSectionIndex + 1 : currentSectionIndex - 1;
 
-    changeSection(currentSectionIndex, state.activeSectionIndex);
+    changeSection(currentSectionIndex, state.activeSection);
 }
 
 export function changeSectionBySpecificIndex(index: number) {
@@ -23,19 +23,19 @@ export function changeSectionBySpecificIndex(index: number) {
 
     state.isScrolling = true;
 
-    const currentSectionIndex = state.activeSectionIndex;
+    const currentSectionIndex = state.activeSection;
 
     if(!isAllowToChangeByIndex(index)) return state.isScrolling = false;
 
     state.sections[currentSectionIndex].classList.remove(ClassName.activeSection);
 
-    state.activeSectionIndex = index;
+    state.activeSection = index;
 
-    changeSection(currentSectionIndex, state.activeSectionIndex);
+    changeSection(currentSectionIndex, state.activeSection);
 }
 
 function changeSection(previousIndex: number, nextIndex: number) {
-    emitter.emit(EmitterEvents.onBeforeSectionChange, { prevIndex: previousIndex, currentIndex: nextIndex });
+    emitter.emit(EmitterEvents.onBeforeSectionChange, { beforeIndex: previousIndex, afterIndex: nextIndex });
 
     state.sections[previousIndex].classList.remove(ClassName.activeSection);
 
@@ -51,12 +51,12 @@ function changeSection(previousIndex: number, nextIndex: number) {
     setTimeout(() => {
         state.isScrolling = false;
 
-        emitter.emit(EmitterEvents.onSectionChange, { prevIndex: previousIndex, currentIndex: nextIndex });
+        emitter.emit(EmitterEvents.onSectionChange, { beforeIndex: previousIndex, afterIndex: nextIndex });
     }, 700);
 }
 
 function isAllowToChangeSection(direction: ScrollDirection) {
-    return direction === "down" ? state.sections.length != state.activeSectionIndex + 1 : state.activeSectionIndex -1 !== -1;
+    return direction === "down" ? state.sections.length != state.activeSection + 1 : state.activeSection -1 !== -1;
 }
 
 function isAllowToChangeByIndex(index: number) {

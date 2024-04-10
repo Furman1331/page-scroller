@@ -16,14 +16,12 @@ let focusElementCollation: FocusElementCollation = null;
  * Registers the keyboard event listeners for keyup and keydown events.
  */
 export function registerKeyboardEvents() {
-    window.addEventListener("blur", onBlurHandler);
     document.addEventListener("keydown", keyDownEventHandler);
 
     emitter.on(EmitterEvents.onSectionChange, onSectionChangeHandler)
 }
 
 export function destroyKeyboardEvents() {
-    window.removeEventListener("blur", onBlurHandler);
     document.removeEventListener("keydown", keyDownEventHandler);
 
     emitter.off(EmitterEvents.onSectionChange);
@@ -65,7 +63,7 @@ function keyDownEventHandler(event: KeyboardEvent) {
 export function onTabPress(event: KeyboardEvent) {
     const isShiftPressed = event.shiftKey;
     const activeElement = document.activeElement;
-    const focusableElements = getFocusableElements(state.sections[state.activeSectionIndex]);
+    const focusableElements = getFocusableElements(state.sections[state.activeSection]);
 
     const isFirstFocusableInSection = activeElement === focusableElements[0];
     const isLastFocusableInSection = activeElement === focusableElements[focusableElements.length - 1];
@@ -89,7 +87,7 @@ export function onTabPress(event: KeyboardEvent) {
 function onSectionChangeHandler() {
     if(!focusElementCollation) return;
 
-    const focusableElements = getFocusableElements(state.sections[state.activeSectionIndex]);
+    const focusableElements = getFocusableElements(state.sections[state.activeSection]);
 
     focusableElements[focusElementCollation === "first" ? 0 : focusableElements.length - 1].focus();
 
@@ -98,8 +96,4 @@ function onSectionChangeHandler() {
 
 function getFocusableElements(parent: HTMLElement) {
     return [].slice.call(parent.querySelectorAll(focusableElementsString)).filter((element) => element.getAttribute("tabindex") !== "-1" && element.offsetParent !== null);
-}
-
-function onBlurHandler() {
-    
 }

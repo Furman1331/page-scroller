@@ -1,5 +1,7 @@
 import { state } from "../state";
 
+import { registerEmitterEvents, destroyEmitterEvents } from "../emitter";
+
 import { useLogger } from "../logger";
 import { initializeDOM, destroyDOM } from "./dom";
 import { destroyEvents, registerEvents } from "../events";
@@ -22,6 +24,8 @@ export function onInitialize(options?: usePageScrollerOptions) {
 
     registerEvents();
 
+    registerEmitterEvents();
+
     state.isInitialized = true;
 
     logger.info("Initialized Page Scroller.");
@@ -33,6 +37,8 @@ export function onDestroy() {
     destroyDOM();
 
     destroyEvents();
+
+    destroyEmitterEvents();
 
     destroyState();
 

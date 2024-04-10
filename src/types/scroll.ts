@@ -1,4 +1,4 @@
-// export type Events = "scroll" | "touch" | "keydown" | "mouse";
+export type ScrollingMode = "automatic" | "manual";
 
 export type ScrollDirection = "up" | "down";
 

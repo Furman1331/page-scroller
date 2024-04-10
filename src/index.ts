@@ -1,2 +1,2 @@
-export * from "./page-scroller";
+export * from "./common/methods";
 export * from "./usePageScroller";

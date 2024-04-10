@@ -1,14 +1,13 @@
-import { onSectionChangeProps } from "../types";
+import type { ScrollingMode } from "../types";
 
 export class State {
     container: HTMLElement | null = null;
     sections: HTMLElement[] | null = null;
 
-    activeSectionIndex: number = 0;
-
-    transitionTimingFunction: string = "ease";
-
+    scrollMode: ScrollingMode = "automatic";
+    activeSection: number = 0;
     scrollingSpeed: number = 700;
+    transitionTimingFunction: string = "ease";
 
     isDebug: boolean = false;
     isScrolling: boolean = false;
@@ -19,10 +18,4 @@ export class State {
     isTouchEnabled: boolean = true;
 }
 
-class Callback {
-    onSectionChange: (props: onSectionChangeProps) => unknown;
-    onBeforeSectionChange: (props: onSectionChangeProps) => unknown;
-}
-
 export const state = new State();
-export const callback = new Callback();

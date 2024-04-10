@@ -2,7 +2,10 @@ import type { Emitter, EventHandlerList, EventHandlerMap, EventType, Handler, Wi
 
 export enum EmitterEvents {
     onSectionChange = "onSectionChange",
-    onBeforeSectionChange = "onBeforeSectionChange"
+    onBeforeSectionChange = "onBeforeSectionChange",
+    onPageScrollStatusChanged = "onPageScrollStatusChanged",
+    onPageScrollModeAutomatic = "onPageScrollModeAutomatic",
+    onPageScrollModeManual = "onPageScrollModeManual"
 }
 
 function mitt<Events extends Record<EventType, unknown>>(

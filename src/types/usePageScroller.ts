@@ -1,6 +1,6 @@
 import { ScrollDirection } from "./scroll";
 
-import type { onSectionChangeProps } from "./emitter";
+import type { onSectionChangeProps, onBeforeSectionChangeProps, ScrollingMode } from "./";
 
 export interface usePageScrollerOptions {
     isDebug?: boolean;
@@ -11,9 +11,10 @@ export interface usePageScrollerOptions {
     transitionTimingFunction?: string;
 
     scrollingSpeed?: number;
+    scrollMode?: ScrollingMode;
 
     onSectionChange?: (props: onSectionChangeProps) => unknown;
-    onBeforeSectionChange?: (props: onSectionChangeProps) => unknown;
+    onBeforeSectionChange?: (props: onBeforeSectionChangeProps) => unknown;
 }
 
 export interface usePageScrollerReturn {

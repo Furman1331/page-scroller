@@ -33,8 +33,3 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 		type: undefined extends Events[Key] ? Key : never
 	): void;
 }
-
-export interface onSectionChangeProps {
-	prevIndex: number;
-	currentIndex: number;
-}
