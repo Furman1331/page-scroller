@@ -11,6 +11,7 @@ export class State {
 
     isDebug: boolean = false;
     isScrolling: boolean = false;
+    isResizing: boolean = false;
     isInitialized: boolean = false;
 
     isWheelEnabled: boolean = true;

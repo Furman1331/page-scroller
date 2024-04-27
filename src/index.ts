@@ -1,2 +1,2 @@
-export * from "./common/methods";
+export * from "./shared";
 export * from "./usePageScroller";

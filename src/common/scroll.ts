@@ -34,6 +34,15 @@ export function changeSectionBySpecificIndex(index: number) {
     changeSection(currentSectionIndex, state.activeSection);
 }
 
+export function reAdjustCurrentSection() {
+    const sectionOffset = state.sections[state.activeSection].offsetTop;
+
+    const transform = `translate3d(0px, -${sectionOffset}px, 0px)`;
+
+    state.container.style.transform = transform;
+    state.container.style.webkitTransform = transform;
+}
+
 function changeSection(previousIndex: number, nextIndex: number) {
     emitter.emit(EmitterEvents.onBeforeSectionChange, { beforeIndex: previousIndex, afterIndex: nextIndex });
 

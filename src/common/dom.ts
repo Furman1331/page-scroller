@@ -31,6 +31,8 @@ export function destroyDOM() {
     state.container.classList.remove(ClassName.container);
 
     state.container.style.transition = "";
+    state.container.style.transform = "none";
+    state.container.style.webkitTransform = "none";
 
     state.sections.forEach((section) => section.classList.remove(ClassName.section));
 }
