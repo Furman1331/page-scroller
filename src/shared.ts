@@ -5,6 +5,9 @@ import type { ScrollingMode } from "./types";
 
 export { onDestroy, changeSectionByDirection, changeSectionBySpecificIndex } from "./common";
 
+export const isManualScrollingMode = (): boolean => state.scrollMode === "manual";
+export const isAutomaticScrollingMode = (): boolean => state.scrollMode === "automatic";
+
 export function changeScrollingMode(mode: ScrollingMode) {
     state.scrollMode = mode;
 

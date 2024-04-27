@@ -1,6 +1,11 @@
 import { state } from "../state";
-
+import { useLogger } from "../logger";
 import { reAdjustCurrentSection } from "../common";
+
+const logger = useLogger();
+
+let timeout;
+let isResizing = false;
 
 export function registerResizeEvents() {
     onResizeHandler();
@@ -11,12 +16,13 @@ export function registerResizeEvents() {
 export function destroyResizeEvents() {
     setSectionsHeight();
 
+    clearTimeout(timeout)
+
     window.removeEventListener("resize", onResizeHandler);
 }
 
-let timeout;
-let isResizing = false;
 function onResizeHandler() {
+    logger.info("Resize event has been triggered.");
     if(!isResizing) {
         setSectionsHeight(window ? window.innerHeight : document.documentElement.offsetHeight);
     }

@@ -35,6 +35,8 @@ export function changeSectionBySpecificIndex(index: number) {
 }
 
 export function reAdjustCurrentSection() {
+    if(state.scrollMode === "manual") return;
+
     const sectionOffset = state.sections[state.activeSection].offsetTop;
 
     const transform = `translate3d(0px, -${sectionOffset}px, 0px)`;

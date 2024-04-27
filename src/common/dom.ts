@@ -59,4 +59,8 @@ export function prepareScrollModeManualDOM() {
 
     htmlElement.style.overflow = "auto";
     htmlElement.style.height = "initial";
+
+    state.container.style.transition = "";
+    state.container.style.transform = "none";
+    state.container.style.webkitTransform = "none";
 }
