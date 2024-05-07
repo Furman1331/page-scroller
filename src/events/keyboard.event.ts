@@ -15,19 +15,27 @@ let focusElementCollation: FocusElementCollation = null;
 /**
  * Registers the keyboard event listeners for keyup and keydown events.
  */
-export function registerKeyboardEvents() {
+export function registerKeyboardEvents(): void {
     document.addEventListener("keydown", keyDownEventHandler);
 
     emitter.on(EmitterEvents.onSectionChange, onSectionChangeHandler)
 }
 
-export function destroyKeyboardEvents() {
+/**
+ * Removes the keyboard event listeners for keyup and keydown events.
+ */
+export function destroyKeyboardEvents(): void {
     document.removeEventListener("keydown", keyDownEventHandler);
 
     emitter.off(EmitterEvents.onSectionChange);
 }
 
-function keyDownEventHandler(event: KeyboardEvent) {
+/**
+ * Hanldes the keydown event and changes the section based on the key pressed.
+ * @param event KeyboardEvent - The keyboard event.
+ * @returns void
+ */
+function keyDownEventHandler(event: KeyboardEvent): void {
     logger.info("Keydown event detected");
     const key = event.key as SupportedKeyboardKeys;
 
@@ -63,7 +71,7 @@ function keyDownEventHandler(event: KeyboardEvent) {
 export function onTabPress(event: KeyboardEvent) {
     const isShiftPressed = event.shiftKey;
     const activeElement = document.activeElement;
-    const focusableElements = getFocusableElements(state.sections[state.activeSection]);
+    const focusableElements = getFocusableElements(state.sections[state.activeSection].element);
 
     const isFirstFocusableInSection = activeElement === focusableElements[0];
     const isLastFocusableInSection = activeElement === focusableElements[focusableElements.length - 1];
@@ -87,7 +95,7 @@ export function onTabPress(event: KeyboardEvent) {
 function onSectionChangeHandler() {
     if(!focusElementCollation) return;
 
-    const focusableElements = getFocusableElements(state.sections[state.activeSection]);
+    const focusableElements = getFocusableElements(state.sections[state.activeSection].element);
 
     focusableElements[focusElementCollation === "first" ? 0 : focusableElements.length - 1].focus();
 

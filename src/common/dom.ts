@@ -1,4 +1,5 @@
 import { state } from "../state";
+import { Section } from "../types";
 import { ClassName } from "../utils/class.enum";
 
 export function initializeDOM() {
@@ -14,11 +15,24 @@ export function initializeDOM() {
 
     state.container.style.transition = transition;
 
-    state.sections = [].slice.call(state.container.children);
-
-    state.sections.forEach((section) => section.classList.add(ClassName.section));
+    prepareSections();
 
     state.scrollMode === "automatic" ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
+}
+
+function prepareSections() {
+    state.sections = Array.from(state.container.children).map((element) => {
+        const section = element as HTMLElement;
+        const slides = Array.from(section.children) as HTMLElement[];
+
+        const foundSlides = slides.filter((slide) => slide.className === "slide");
+
+        foundSlides.forEach((slide) => slide.classList.add(ClassName.slide));
+
+        return { element: section, slides: foundSlides };
+    }) as Section[];
+
+    state.sections.forEach((section) => section.element.classList.add(ClassName.section));
 }
 
 export function destroyDOM() {
@@ -34,7 +48,7 @@ export function destroyDOM() {
     state.container.style.transform = "none";
     state.container.style.webkitTransform = "none";
 
-    state.sections.forEach((section) => section.classList.remove(ClassName.section));
+    state.sections.forEach((section) => section.element.classList.remove(ClassName.section));
 }
 
 export function prepareScrollModeAutomaticDOM() {
@@ -47,6 +61,10 @@ export function prepareScrollModeAutomaticDOM() {
 
     htmlElement.style.overflow = "hidden";
     htmlElement.style.height = "100%";
+
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+
+    state.container.style.transition = transition;
 }
 
 export function prepareScrollModeManualDOM() {

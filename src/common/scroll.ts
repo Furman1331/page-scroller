@@ -27,7 +27,7 @@ export function changeSectionBySpecificIndex(index: number) {
 
     if(!isAllowToChangeByIndex(index)) return state.isScrolling = false;
 
-    state.sections[currentSectionIndex].classList.remove(ClassName.activeSection);
+    state.sections[currentSectionIndex].element.classList.remove(ClassName.activeSection);
 
     state.activeSection = index;
 
@@ -37,7 +37,7 @@ export function changeSectionBySpecificIndex(index: number) {
 export function reAdjustCurrentSection() {
     if(state.scrollMode === "manual") return;
 
-    const sectionOffset = state.sections[state.activeSection].offsetTop;
+    const sectionOffset = state.sections[state.activeSection].element.offsetTop;
 
     const transform = `translate3d(0px, -${sectionOffset}px, 0px)`;
 
@@ -48,16 +48,16 @@ export function reAdjustCurrentSection() {
 function changeSection(previousIndex: number, nextIndex: number) {
     emitter.emit(EmitterEvents.onBeforeSectionChange, { beforeIndex: previousIndex, afterIndex: nextIndex });
 
-    state.sections[previousIndex].classList.remove(ClassName.activeSection);
+    state.sections[previousIndex].element.classList.remove(ClassName.activeSection);
 
-    const sectionOffset = state.sections[nextIndex].offsetTop;
+    const sectionOffset = state.sections[nextIndex].element.offsetTop;
 
     const transform = `translate3d(0px, -${sectionOffset}px, 0px)`;
 
     state.container.style.transform = transform;
     state.container.style.webkitTransform = transform;
 
-    state.sections[nextIndex].classList.add(ClassName.activeSection);
+    state.sections[nextIndex].element.classList.add(ClassName.activeSection);
 
     setTimeout(() => {
         state.isScrolling = false;

@@ -47,6 +47,6 @@ function resizeAction() {
 
 function setSectionsHeight(value?: number) {
     state.sections.forEach(section => {
-        section.style.height = value ? `${value}px` : "";
+        section.element.style.height = value ? `${value}px` : "";
     })
 }

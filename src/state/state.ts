@@ -1,8 +1,8 @@
-import type { ScrollingMode } from "../types";
+import type { ScrollingMode, Section } from "../types";
 
 export class State {
     container: HTMLElement | null = null;
-    sections: HTMLElement[] | null = null;
+    sections: Section[] | null = null;
 
     scrollMode: ScrollingMode = "automatic";
     activeSection: number = 0;
