@@ -47,6 +47,10 @@ export function prepareScrollModeAutomaticDOM() {
 
     htmlElement.style.overflow = "hidden";
     htmlElement.style.height = "100%";
+
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+
+    state.container.style.transition = transition;
 }
 
 export function prepareScrollModeManualDOM() {
