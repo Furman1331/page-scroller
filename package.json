@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "npm run test && rollup -c ./rollup/rollup.config.js",
+    "build:notest": "rollup -c ./rollup/rollup.config.js",
     "test": "jest"
   },
   "keywords": [

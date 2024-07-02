@@ -15,3 +15,10 @@ export function isUserUsingInput() {
 
     return supportedElements.includes(activeElement.tagName.toLowerCase());
 }
+
+export function getAverageFromArray(array: number[], number: number) {
+    const last = array.slice(Math.max(array.length - number, 0));
+    const sum = last.reduce((acc, curr) => acc + curr, 0);
+
+    return Math.ceil(sum / number);
+}
