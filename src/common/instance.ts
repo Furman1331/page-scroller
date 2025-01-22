@@ -16,18 +16,14 @@ export function onInitialize(options?: usePageScrollerOptions) {
 
     if(options) {
         initializeState(options);
-
         initializeCallbacks(options);
     }
 
     initializeDOM();
-
     registerEvents();
-
     registerEmitterEvents();
 
     state.isInitialized = true;
-
     logger.info("Initialized Page Scroller.");
 }
 
@@ -35,13 +31,9 @@ export function onDestroy() {
     logger.warn("Destroying Page Scroller...");
 
     destroyDOM();
-
     destroyEvents();
-
     destroyEmitterEvents();
-
     destroyState();
-
     destroyCallbacks();
 
     state.isInitialized = false;

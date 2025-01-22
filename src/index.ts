@@ -1,2 +1,2 @@
-export * from "./shared";
-export * from "./usePageScroller";
+export * from './shared'
+export * from './usePageScroller'

@@ -1,6 +1,6 @@
 {
   "name": "@furman1331/page-scroller",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Amazing plugin for creating smooth scroll on your website",
   "source": "src/index.ts",
   "main": "dist/index.cjs.js",
@@ -14,6 +14,7 @@
     }
   },
   "scripts": {
+    "dev": "rollup -c ./rollup/rollup.config.js --watch",
     "build": "npm run test && rollup -c ./rollup/rollup.config.js",
     "build:notest": "rollup -c ./rollup/rollup.config.js",
     "test": "jest"
@@ -31,6 +32,7 @@
     "url": "https://github.com/Furman1331/page-scroller"
   },
   "author": "<michalfurmanczak@gmail.com>",
+  "homepage": "https://github.com/Furman1331/page-scroller",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",

@@ -11,11 +11,9 @@ export function initializeDOM() {
     state.container.classList.add(ClassName.container);
 
     const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
-
     state.container.style.transition = transition;
 
     state.sections = [].slice.call(state.container.children);
-
     state.sections.forEach((section) => section.classList.add(ClassName.section));
 
     state.scrollMode === "automatic" ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
@@ -49,7 +47,6 @@ export function prepareScrollModeAutomaticDOM() {
     htmlElement.style.height = "100%";
 
     const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
-
     state.container.style.transition = transition;
 }
 

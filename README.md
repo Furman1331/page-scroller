@@ -12,6 +12,10 @@ npm i @furman1331/page-scroller
 
 To initialize Page scroller you should use usePageScroller function where you configure whole library. And execute <strong>initPageScroller</strong>, it should contain the id of elements wrapper.
 
+Important!
+The page which you wanna use as page-scroller should have minimum height of 100vh!
+Otherway it won't work well
+
 ```javascript
 import { usePageScroller } from "@furman1331/page-scroller";
 
