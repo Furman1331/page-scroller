@@ -1,0 +1,10 @@
+{
+    "prettier.requireConfig": true,
+	"tabWidth": 4,
+	"useTabs": true,
+	"singleQuote": true,
+	"semi": false,
+	"printWidth": 130,
+	"bracketSameLine": false,
+	"endOfLine": "auto"
+}

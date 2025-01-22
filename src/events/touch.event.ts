@@ -1,7 +1,10 @@
+import { useLogger } from "../logger";
 import { state } from "../state/state";
 import { changeSectionByDirection } from "../common";
 
 import type { Coordinates } from "../types";
+
+const logger = useLogger();
 
 export function registerTouchEvents() {
     document.addEventListener("touchstart", onTouchStartHandler);
@@ -24,6 +27,8 @@ export function onTouchStartHandler(event: TouchEvent) {
 }
 
 export function onTouchMoveHandler(event: TouchEvent): void {
+    logger.info("Touch move event detected");
+
     const coordinates = getEventCoordinated(event);
 
     const isVerticalMovementEnought = Math.abs(coordinates.y - touchStartCoordinates.y) > (window.innerHeight / 100 * 5);

@@ -1,7 +1,11 @@
 import { useLogger } from "../logger";
 import { changeSectionByDirection } from "../common";
+import { getAverageFromArray } from "../utils";
 
 import type { ScrollDirection } from "../types";
+
+let scrollingTimeout;
+let scrollings = [];
 
 const logger = useLogger();
 
@@ -26,9 +30,29 @@ export function destroyWheelEvent() {
 function wheelEventHandler(event: WheelEvent) {
     logger.info("Wheel event detected");
 
-    const direction = getScrollDirection(event);
+    clearTimeout(scrollingTimeout);
+
+    scrollingTimeout = setTimeout(() => {
+        scrollings = [];
+    }, 200);
+
+    const scrollValue = -event.deltaY || event.detail;
+    const direction = getScrollDirection(scrollValue);
+
+    if(scrollings.length > 100) { scrollings.shift(); }
+
+    scrollings.push(Math.abs(scrollValue));
+
+    if(!checkIsAccelerating()) return;
 
     return changeSectionByDirection(direction);
+}
+
+function checkIsAccelerating() {
+    const avarageFromEnd = getAverageFromArray(scrollings, 5);
+    const avarageFromMid = getAverageFromArray(scrollings, 50);
+
+    return avarageFromEnd >= avarageFromMid;
 }
 
 /**
@@ -36,6 +60,8 @@ function wheelEventHandler(event: WheelEvent) {
  * @param event - The WheelEvent object.
  * @returns The scroll direction, either "up" or "down".
  */
-function getScrollDirection(event: WheelEvent): ScrollDirection {
-    return event.deltaY < 0 ? "up" : "down";
+function getScrollDirection(value: number): ScrollDirection {
+    const delta = Math.max(-1, Math.min(1, value));
+
+    return delta < 0 ? "down" : "up";
 }

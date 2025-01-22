@@ -16,16 +16,8 @@ function mitt<Events extends Record<EventType, unknown>>(
         | WildcardHandler<Events>;
     all = all || new Map();
 
-
     return {
         all,
-
-        /**
-         * Register an event handler for the given type.
-         * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
-         * @param {Function} handler Function to call in response to given event
-         * @memberOf mitt
-         */
         on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
             const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
             if (handlers) {
@@ -35,13 +27,6 @@ function mitt<Events extends Record<EventType, unknown>>(
             }
         },
 
-        /**
-         * Remove an event handler for the given type.
-         * If `handler` is omitted, all handlers of the given type are removed.
-         * @param {string|symbol} type Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
-         * @param {Function} [handler] Handler function to remove
-         * @memberOf mitt
-         */
         off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
             const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
             if (handlers) {
@@ -53,16 +38,6 @@ function mitt<Events extends Record<EventType, unknown>>(
             }
         },
 
-        /**
-         * Invoke all handlers for the given type.
-         * If present, `'*'` handlers are invoked after type-matched handlers.
-         *
-         * Note: Manually firing '*' handlers is not supported.
-         *
-         * @param {string|symbol} type The event type to invoke
-         * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
-         * @memberOf mitt
-         */
         emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
             let handlers = all!.get(type);
             if (handlers) {

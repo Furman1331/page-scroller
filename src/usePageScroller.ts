@@ -1,27 +1,27 @@
-import { useLogger } from "./logger";
-import { state } from "./state/state";
-import { changeSectionBySpecificIndex, changeSectionByDirection, onInitialize } from "./common";
+import { useLogger } from './logger'
+import { state } from './state/state'
+import { changeSectionBySpecificIndex, changeSectionByDirection, onInitialize } from './common'
 
-import type { usePageScrollerOptions, usePageScrollerReturn } from "./types";
+import type { usePageScrollerOptions, usePageScrollerReturn } from './types'
 
-import "./index.css";
+import './index.css'
 
-const logger = useLogger();
+const logger = useLogger()
 
 export function usePageScroller(options?: usePageScrollerOptions): usePageScrollerReturn {
-    function initPageScroller(selector: string) {
-        logger.info("Initializing page scroller...");
+	function initPageScroller(selector: string) {
+		logger.info('Initializing page scroller...')
 
-        if(state.isInitialized) throw new Error(logger.createMessage("Page scroller is already initialized."));
+		if (state.isInitialized) throw new Error(logger.createMessage('Page scroller is already initialized.'))
 
-        if(selector === undefined) throw new Error(logger.createMessage("Please provide a valid selector."));
+		if (selector === undefined) throw new Error(logger.createMessage('Please provide a valid selector.'))
 
-        state.container = document.querySelector(selector);
+		state.container = document.querySelector(selector)
 
-        if(!state.container) throw new Error(logger.createMessage("Container not found. Please provide a valid selector."));
+		if (!state.container) throw new Error(logger.createMessage('Container not found. Please provide a valid selector.'))
 
-        onInitialize(options);
-    }
+		onInitialize(options)
+	}
 
-    return { initPageScroller, changeSectionByDirection, changeSectionBySpecificIndex };
+	return { initPageScroller, changeSectionByDirection, changeSectionBySpecificIndex }
 }
