@@ -1,6 +1,6 @@
 import { state } from '../state'
-import { Section } from '../types'
-import { ClassName } from '../utils/class.enum'
+// import { Section } from '../types'
+import { ClassName, SlideClassName } from '../utils/class.enum'
 
 export function initializeDOM() {
 	const htmlElement = document.querySelector('html')
@@ -16,25 +16,46 @@ export function initializeDOM() {
 
 	prepareSections()
 
-	state.sections = [].slice.call(state.container.children)
-	state.sections.forEach((section) => section.classList.add(ClassName.section))
-
 	state.scrollMode === 'automatic' ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM()
 }
 
 function prepareSections() {
 	state.sections = Array.from(state.container.children).map((element) => {
 		const section = element as HTMLElement
+
 		const slides = Array.from(section.children) as HTMLElement[]
 
-		const foundSlides = slides.filter((slide) => slide.className === 'slide')
-
+		const foundSlides = slides.filter((slide) => slide.hasAttribute('data-slide'))
 		foundSlides.forEach((slide) => slide.classList.add(ClassName.slide))
 
+		if (foundSlides.length > 0) preapreSectionForSlides(section, foundSlides)
+
 		return { element: section, slides: foundSlides }
-	}) as Section[]
+	}) as ISection[]
 
 	state.sections.forEach((section) => section.element.classList.add(ClassName.section))
+}
+
+function preapreSectionForSlides(section: HTMLElement, slides: HTMLElement[]) {
+	const wrapperElement = document.createElement('div')
+	wrapperElement.classList.add(SlideClassName.wrapper)
+
+	const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`
+	wrapperElement.style.transition = transition
+	wrapperElement.style.width = `${slides.length * 100}%`
+
+	slides.forEach((slide) => {
+		slide.style.width = `${100 / slides.length}%`
+
+		wrapperElement.appendChild(slide)
+	})
+
+	const containerElement = document.createElement('div')
+	containerElement.classList.add(ClassName.sectionWithSlides)
+
+	containerElement.appendChild(wrapperElement)
+
+	section.appendChild(containerElement)
 }
 
 export function destroyDOM() {
