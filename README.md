@@ -47,7 +47,13 @@ Current section index number.
 Destroy Page Scroller Plugin
 
 ### changeScrollingMode()
-Change current scrolling mode.
+Change current scrolling mode, parameter could be: "manual" | "automatic"
+
+## Manual
+Switch plugin from scrolling by page to default scroll, could be usefull while building mobile version of application
+
+## Automatic
+Switch back to whole page scroller.
 
 Examples:
 ```javascript
