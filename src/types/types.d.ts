@@ -1,6 +1,11 @@
-import type { onSectionChangeProps, onBeforeSectionChangeProps } from './'
+interface ISectionChangeProps {
+	beforeIndex: number
+	afterIndex: number
+}
 
-export interface usePageScrollerOptions {
+type ISectionBeforeChangeProps = ISectionChangeProps
+
+interface IPageScrollerOptions {
 	isDebug?: boolean
 	isWheelEnabled?: boolean
 	isKeyboardEnabled?: boolean
@@ -10,13 +15,13 @@ export interface usePageScrollerOptions {
 
 	scrollingSpeed?: number
 	scrollMode?: TScrollingMode
-	isAllowToScrollHorizontally?: boolean
+	isAllowToScrollThroughSlides?: boolean
 
-	onSectionChange?: (props: onSectionChangeProps) => unknown
-	onBeforeSectionChange?: (props: onBeforeSectionChangeProps) => unknown
+	onSectionChange?: (props: ISectionChangeProps) => unknown
+	onBeforeSectionChange?: (props: ISectionBeforeChangeProps) => unknown
 }
 
-export interface usePageScrollerReturn {
+interface IPageScrollerReturn {
 	initPageScroller(selector: string): void
 	changeSectionBySpecificIndex: (index: number) => void
 	changeSectionByDirection: (direction: TScrollingDirectionVertically) => void

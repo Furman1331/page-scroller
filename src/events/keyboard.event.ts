@@ -1,7 +1,7 @@
 import { useLogger } from '../logger'
 import { state } from '../state/state'
 import { focusableElementsString, isUserUsingInput } from '../utils'
-import { changeSectionByDirection, changeSectionBySpecificIndex } from '../common'
+import { changeSectionOrSlideByDirection, changeSectionBySpecificIndex, changeSlideByDirection } from '../common'
 import { EmitterEvents, emitter } from '../emitter'
 
 type FocusElementCollation = 'first' | 'last'
@@ -43,12 +43,16 @@ function keyDownEventHandler(event: KeyboardEvent): void {
 		case ' ':
 		case 'ArrowDown':
 		case 'PageDown':
-			changeSectionByDirection('down')
+			changeSectionOrSlideByDirection('down')
 			break
 		case 'ArrowUp':
 		case 'PageUp':
-			changeSectionByDirection('up')
+			changeSectionOrSlideByDirection('up')
 			break
+		case 'ArrowRight':
+			changeSlideByDirection('right')
+		case 'ArrowLeft':
+			changeSlideByDirection('left')
 		case 'End':
 			changeSectionBySpecificIndex(state.sections.length - 1)
 			break
@@ -83,7 +87,7 @@ export function onTabPress(event: KeyboardEvent) {
 
 		focusElementCollation = direction === 'up' ? 'last' : 'first'
 
-		changeSectionByDirection(direction)
+		changeSectionOrSlideByDirection(direction)
 	}
 }
 

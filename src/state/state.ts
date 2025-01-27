@@ -18,7 +18,7 @@ export class State {
 	isKeyboardEnabled: boolean = true
 	isTouchEnabled: boolean = true
 
-	isAllowToScrollHorizontally: boolean = false
+	isAllowToScrollThroughSlides: boolean = true
 }
 
 export const state = new State()

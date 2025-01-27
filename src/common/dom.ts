@@ -23,20 +23,24 @@ function prepareSections() {
 	state.sections = Array.from(state.container.children).map((element) => {
 		const section = element as HTMLElement
 
-		const slides = Array.from(section.children) as HTMLElement[]
+		const childrens = Array.from(section.children) as HTMLElement[]
 
-		const foundSlides = slides.filter((slide) => slide.hasAttribute('data-slide'))
+		const foundSlides = childrens.filter((slide) => slide.hasAttribute('page-scroller-slide'))
 		foundSlides.forEach((slide) => slide.classList.add(ClassName.slide))
 
-		if (foundSlides.length > 0) preapreSectionForSlides(section, foundSlides)
+		if (!foundSlides.length) return { element: section, slides: null }
 
-		return { element: section, slides: foundSlides }
-	}) as ISection[]
+		const container = preapreSectionForSlides(section, foundSlides)
+
+		const slides = { container, elements: foundSlides }
+
+		return { element: section, slides }
+	})
 
 	state.sections.forEach((section) => section.element.classList.add(ClassName.section))
 }
 
-function preapreSectionForSlides(section: HTMLElement, slides: HTMLElement[]) {
+function preapreSectionForSlides(section: HTMLElement, slides: HTMLElement[]): HTMLElement {
 	const wrapperElement = document.createElement('div')
 	wrapperElement.classList.add(SlideClassName.wrapper)
 
@@ -56,6 +60,8 @@ function preapreSectionForSlides(section: HTMLElement, slides: HTMLElement[]) {
 	containerElement.appendChild(wrapperElement)
 
 	section.appendChild(containerElement)
+
+	return wrapperElement
 }
 
 export function destroyDOM() {

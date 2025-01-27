@@ -1,7 +1,13 @@
 import { state } from './state'
 import { emitter, EmitterEvents } from './emitter'
 
-export { onDestroy, changeSectionByDirection, changeSectionBySpecificIndex } from './common'
+export {
+	onDestroy,
+	changeSectionOrSlideByDirection,
+	changeSectionByDirection,
+	changeSectionBySpecificIndex,
+	changeSlideByDirection,
+} from './common'
 
 export const isManualScrollingMode = (): boolean => state.scrollMode === 'manual'
 export const isAutomaticScrollingMode = (): boolean => state.scrollMode === 'automatic'

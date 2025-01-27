@@ -1,5 +1,5 @@
 import { useLogger } from '../logger'
-import { changeSectionByDirection } from '../common'
+import { changeSectionOrSlideByDirection } from '../common'
 import { getAverageFromArray } from '../utils'
 
 let scrollingTimeout
@@ -45,7 +45,7 @@ function wheelEventHandler(event: WheelEvent) {
 
 	if (!checkIsAccelerating()) return
 
-	return changeSectionByDirection(direction)
+	return changeSectionOrSlideByDirection(direction)
 }
 
 function checkIsAccelerating() {
