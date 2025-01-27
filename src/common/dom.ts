@@ -25,7 +25,7 @@ function prepareSections() {
 
 		const childrens = Array.from(section.children) as HTMLElement[]
 
-		const foundSlides = childrens.filter((slide) => slide.hasAttribute('page-scroller-slide'))
+		const foundSlides = childrens.filter((slide) => slide.hasAttribute(state.slidesIdentifyAttribute))
 		foundSlides.forEach((slide) => slide.classList.add(ClassName.slide))
 
 		if (!foundSlides.length) return { element: section, slides: null }

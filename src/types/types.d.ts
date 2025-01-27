@@ -11,10 +11,11 @@ interface IPageScrollerOptions {
 	isKeyboardEnabled?: boolean
 	isTouchEnabled?: boolean
 
-	transitionTimingFunction?: string
-
 	scrollingSpeed?: number
 	scrollMode?: TScrollingMode
+	transitionTimingFunction?: string
+
+	slidesIdentifyAttribute?: string
 	isAllowToScrollThroughSlides?: boolean
 
 	onSectionChange?: (props: ISectionChangeProps) => unknown

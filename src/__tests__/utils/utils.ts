@@ -1,12 +1,16 @@
-import { state } from "../../state/state";
+import { usePageScroller } from '../../usePageScroller'
 
-export function initializeTest() {
-    document.body.innerHTML = `
+export function initializeTest(options?: IPageScrollerOptions) {
+	document.body.innerHTML = `
         <div id="page-scoller">
             <div class="section">Section 1</div>
             <div class="section">Section 1</div>
         </div>
-    `;
+    `
 
-    state.container = document.getElementById("page-scoller") as HTMLElement;
+	initializePageScrollerForTestingPourposes(options)
+}
+
+function initializePageScrollerForTestingPourposes(options?: IPageScrollerOptions) {
+	usePageScroller(options).initPageScroller('#page-scoller')
 }

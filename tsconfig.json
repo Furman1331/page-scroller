@@ -1,20 +1,24 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "outDir": "dist",
-        "target": "esnext",
-        "module": "ESNext",
-        "lib": ["ESNext", "DOM"],
-        "noEmit": false,
-        "strict": false,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "moduleResolution": "Node",
-        "esModuleInterop": true,
-        "declaration": true,
-        "declarationMap": true,
-        "types": ["jest", "node"],
-    },
-    "include": ["src", "src/test"],
-    "exclude": ["node_modules", "dist"]
+	"compilerOptions": {
+		"sourceMap": true,
+		"outDir": "dist",
+		"target": "esnext",
+		"module": "ESNext",
+		"lib": ["ESNext", "DOM"],
+		"noEmit": false,
+		"strict": false,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"declaration": true,
+		"declarationMap": true,
+		"types": ["jest", "node"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
+	},
+	"include": ["src", "src/test"],
+	"exclude": ["node_modules", "dist"]
 }

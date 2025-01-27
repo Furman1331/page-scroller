@@ -1,21 +1,21 @@
 import { useLogger } from '../logger'
 import { state } from '../state/state'
-import { changeSectionByDirection } from '../common'
+import { changeSectionOrSlideByDirection } from '../common'
 
 const logger = useLogger()
 
-export function registerTouchEvents() {
+export function registerTouchEvents(): void {
 	document.addEventListener('touchstart', onTouchStartHandler)
 	state.container.addEventListener('touchmove', onTouchMoveHandler, { passive: false })
 }
 
-export function destroyTouchEvents() {
+export function destroyTouchEvents(): void {
 	document.removeEventListener('touchstart', onTouchStartHandler)
 	state.container.removeEventListener('touchmove', onTouchMoveHandler)
 }
 
 export let touchStartCoordinates: ICoordinates = {}
-export function onTouchStartHandler(event: TouchEvent) {
+export function onTouchStartHandler(event: TouchEvent): void {
 	const coordinates = getEventCoordinated(event)
 
 	touchStartCoordinates = {
@@ -32,7 +32,7 @@ export function onTouchMoveHandler(event: TouchEvent): void {
 
 	const direction = touchStartCoordinates.y > coordinates.y ? 'down' : 'up'
 
-	if (isVerticalMovementEnought) changeSectionByDirection(direction)
+	if (isVerticalMovementEnought) changeSectionOrSlideByDirection(direction)
 }
 
 export function getEventCoordinated(event: TouchEvent): ICoordinates {

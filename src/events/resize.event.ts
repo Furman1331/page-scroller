@@ -47,14 +47,10 @@ function resizeAction() {
 
 function resizeHandler() {
 	const height = window ? window.innerHeight : document.documentElement.offsetHeight
-	// const width = window ? window.innerWidth : document.documentElement.offsetWidth
 
 	setSectionsSize(height)
 }
 
 function setSectionsSize(height: number) {
-	state.sections.forEach((section) => {
-		section.element.style.height = `${height}px`
-		// section.element.style.width = `${width}px`
-	})
+	state.sections.forEach((section) => (section.element.style.height = `${height}px`))
 }

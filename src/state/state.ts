@@ -18,6 +18,7 @@ export class State {
 	isKeyboardEnabled: boolean = true
 	isTouchEnabled: boolean = true
 
+	slidesIdentifyAttribute: string = 'page-scroller-slide'
 	isAllowToScrollThroughSlides: boolean = true
 }
 

@@ -66,7 +66,7 @@ export function reAdjustCurrentSection() {
 	state.container.style.webkitTransform = transform
 }
 
-function changeSection(previousIndex: number, nextIndex: number) {
+export function changeSection(previousIndex: number, nextIndex: number) {
 	emitter.emit(EmitterEvents.onBeforeSectionChange, { beforeIndex: previousIndex, afterIndex: nextIndex })
 
 	state.sections[previousIndex].element.classList.remove(ClassName.activeSection)
@@ -87,7 +87,7 @@ function changeSection(previousIndex: number, nextIndex: number) {
 	}, 700)
 }
 
-function changeSlide(previousIndex: number, nextIndex: number) {
+export function changeSlide(previousIndex: number, nextIndex: number) {
 	emitter.emit(EmitterEvents.onBeforeSlideChange, { beforeIndex: previousIndex, afterIndex: nextIndex })
 
 	const activeSection = state.sections[state.activeSection]
@@ -107,14 +107,14 @@ function changeSlide(previousIndex: number, nextIndex: number) {
 		state.isScrolling = false
 
 		emitter.emit(EmitterEvents.onSlideChange, { beforeIndex: previousIndex, afterIndex: nextIndex })
-	}, 700)
+	}, state.scrollingSpeed)
 }
 
-function isAllowToChangeSection(direction: TScrollingDirectionVertically) {
+export function isAllowToChangeSection(direction: TScrollingDirectionVertically) {
 	return direction === 'down' ? state.sections.length != state.activeSection + 1 : state.activeSection - 1 !== -1
 }
 
-function isAllowToChangeSlide(direction: TScrollingDirectionVertically): boolean {
+export function isAllowToChangeSlide(direction: TScrollingDirectionVertically): boolean {
 	if (!state.isAllowToScrollThroughSlides) return false
 
 	const isCurrentSectionHasSlides = state.sections[state.activeSection].slides?.elements.length > 0
@@ -130,6 +130,6 @@ function isAllowToChangeSlide(direction: TScrollingDirectionVertically): boolean
 	return true
 }
 
-function isAllowToChangeByIndex(index: number) {
+export function isAllowToChangeByIndex(index: number) {
 	return index >= 0 && index < state.sections.length
 }

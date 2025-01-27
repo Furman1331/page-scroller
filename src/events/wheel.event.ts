@@ -3,7 +3,7 @@ import { changeSectionOrSlideByDirection } from '../common'
 import { getAverageFromArray } from '../utils'
 
 let scrollingTimeout
-let scrollings = []
+export let scrollings = []
 
 const logger = useLogger()
 
@@ -25,7 +25,7 @@ export function destroyWheelEvent() {
 	document.body.removeEventListener('wheel', wheelEventHandler)
 }
 
-function wheelEventHandler(event: WheelEvent) {
+export function wheelEventHandler(event: WheelEvent) {
 	logger.info('Wheel event detected')
 
 	clearTimeout(scrollingTimeout)

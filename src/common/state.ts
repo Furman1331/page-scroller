@@ -1,10 +1,12 @@
 import { callback, state } from '../state'
 import { emitter, EmitterEvents } from '../emitter'
 
-const defaultState: IPageScrollerOptions = {
+export const defaultState: IPageScrollerOptions = {
 	scrollMode: 'automatic',
 	scrollingSpeed: 700,
 	transitionTimingFunction: 'ease',
+
+	slidesIdentifyAttribute: 'page-scroller-slide',
 	isAllowToScrollThroughSlides: false,
 
 	isDebug: false,
@@ -23,6 +25,7 @@ export function initializeState(options: IPageScrollerOptions) {
 	state.isKeyboardEnabled = options.isKeyboardEnabled ?? defaultState.isKeyboardEnabled
 	state.isTouchEnabled = options.isTouchEnabled ?? defaultState.isTouchEnabled
 
+	state.slidesIdentifyAttribute = options.slidesIdentifyAttribute ?? defaultState.slidesIdentifyAttribute
 	state.isAllowToScrollThroughSlides = options.isAllowToScrollThroughSlides ?? defaultState.isAllowToScrollThroughSlides
 }
 
@@ -33,10 +36,11 @@ export function destroyState() {
 	state.activeSlide = 0
 	state.activeSection = 0
 
-	state.transitionTimingFunction = 'ease'
-
+	state.transitionTimingFunction = defaultState.transitionTimingFunction
 	state.scrollingSpeed = defaultState.scrollingSpeed
-	state.isAllowToScrollThroughSlides = false
+
+	state.slidesIdentifyAttribute = defaultState.slidesIdentifyAttribute
+	state.isAllowToScrollThroughSlides = defaultState.isAllowToScrollThroughSlides
 
 	state.isDebug = defaultState.isDebug
 	state.isScrolling = false
