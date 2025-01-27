@@ -1,22 +1,25 @@
-import type { ScrollingMode } from "../types";
-
 export class State {
-    container: HTMLElement | null = null;
-    sections: HTMLElement[] | null = null;
+	container: HTMLElement | null = null
+	sections: ISection[] | null = null
 
-    scrollMode: ScrollingMode = "automatic";
-    activeSection: number = 0;
-    scrollingSpeed: number = 700;
-    transitionTimingFunction: string = "ease";
+	activeSlide: number = 0
+	activeSection: number = 0
 
-    isDebug: boolean = false;
-    isScrolling: boolean = false;
-    isResizing: boolean = false;
-    isInitialized: boolean = false;
+	scrollMode: TScrollingMode = 'automatic'
+	scrollingSpeed: number = 700
+	transitionTimingFunction: string = 'ease'
 
-    isWheelEnabled: boolean = true;
-    isKeyboardEnabled: boolean = true;
-    isTouchEnabled: boolean = true;
+	isDebug: boolean = false
+	isScrolling: boolean = false
+	isResizing: boolean = false
+	isInitialized: boolean = false
+
+	isWheelEnabled: boolean = true
+	isKeyboardEnabled: boolean = true
+	isTouchEnabled: boolean = true
+
+	slidesIdentifyAttribute: string = 'page-scroller-slide'
+	isAllowToScrollThroughSlides: boolean = true
 }
 
-export const state = new State();
+export const state = new State()

@@ -11,6 +11,7 @@ html.page-scroller-enabled, .page-scroller-enabled body {
 
 .page-scroller-wrapper {
     height: 100%;
+    width: 100%;
     position: relative;
 }
 
@@ -21,4 +22,19 @@ html.page-scroller-enabled, .page-scroller-enabled body {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.page-scroller-section-with-slides {
+    z-index: 1;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.page-scroller-slide-wrapper {
+    display: flex;
+    float: left;
+    position: relative;
 }

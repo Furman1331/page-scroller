@@ -34,11 +34,20 @@ usePageScroller().initPageScroller("#page-scroller");
 ## Methods
 It's available in whole project so you can execure it in different places.
 
-#### changeSectionBySpecificIndex()
+#### changeSectionOrSlideByDirection(direction: 'down' | 'up')
+Change section by direction, available parameter could be: "down" | "up". <br />
+When using with slides "down" equals "right", "up" equals "left"
+
+#### changeSectionByDirection(direction: 'down' | 'up')
+Change section by direction, parameter could be: "down" | "up" <br />
+It won't work on slides
+
+#### changeSectionBySpecificIndex(index: number)
 Change section to specific index. sections start from 0 to the amount you have in the project
 
-#### changeSectionByDirection()
-Change section by direction, parameter could be: "down" | "up"
+### changeSlideByDirection(direction: 'right' | 'left')
+Change active slide section position to choosen direction.
+Parameter direction could be: 'right' | 'left'
 
 #### getActiveSection()
 Current section index number.
@@ -47,7 +56,13 @@ Current section index number.
 Destroy Page Scroller Plugin
 
 ### changeScrollingMode()
-Change current scrolling mode.
+Change current scrolling mode, parameter could be: "manual" | "automatic"
+
+#### Manual
+Switch plugin from scrolling by page to default scroll, could be usefull while building mobile version of application
+
+#### Automatic
+Switch back to whole page scroller.
 
 Examples:
 ```javascript
@@ -60,6 +75,12 @@ const changeSectionToContact = () => changeSectionBySpecificIndex(3); // In this
 import { changeSectionByDirection } from "@furman1331/page-scroller";
 
 const changeSectionDown = () => changeSectionByDirection("down"); // Section down
+```
+
+```javascript
+import { changeSectionOrSlideByDirection } from "@furman1331/page-scroller";
+
+const changeSectionDown = () => changeSectionOrSlideByDirection("down"); // Section down or Slide right if available.
 ```
 
 ```javascript
@@ -89,6 +110,10 @@ changeScrollingMode("automatic");
 - `scrollingSpeed`: (default: 700) Defines the scrolling speed in milliseconds.
 
 - `transitionTimingFunction`: (default: "ease") Defines the transition effect to use for changing sections.
+
+- `slidesIdentifyAttribute`: (default: "page-scroller-slide") Specifies the name of the attribute that identifies slides in sections
+
+- `isAllowToScrollThroughSlides`: (default: false) Defines the ability to scroll through slides via keyboard, mouse, etc. When disabled slides need to be handled by the `changeSlideByDirection` method.
 
 - `isDebug`: (default: `false`) Defines status of debug logs
 

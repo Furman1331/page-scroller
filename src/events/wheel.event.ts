@@ -1,58 +1,58 @@
-import { useLogger } from "../logger";
-import { changeSectionByDirection } from "../common";
-import { getAverageFromArray } from "../utils";
+import { useLogger } from '../logger'
+import { changeSectionOrSlideByDirection } from '../common'
+import { getAverageFromArray } from '../utils'
 
-import type { ScrollDirection } from "../types";
+let scrollingTimeout
+export let scrollings = []
 
-let scrollingTimeout;
-let scrollings = [];
-
-const logger = useLogger();
+const logger = useLogger()
 
 /**
  * Registers the wheel event listener on the document body.
  */
 export function registerWheelEvent() {
-    logger.info("Wheel event registered");
+	logger.info('Wheel event registered')
 
-    document.body.addEventListener("wheel", wheelEventHandler);
+	document.body.addEventListener('wheel', wheelEventHandler)
 }
 
 /**
  * Removes the wheel event listener from the document body.
  */
 export function destroyWheelEvent() {
-    logger.info("Wheel event registered");
+	logger.info('Wheel event registered')
 
-    document.body.removeEventListener("wheel", wheelEventHandler);
+	document.body.removeEventListener('wheel', wheelEventHandler)
 }
 
-function wheelEventHandler(event: WheelEvent) {
-    logger.info("Wheel event detected");
+export function wheelEventHandler(event: WheelEvent) {
+	logger.info('Wheel event detected')
 
-    clearTimeout(scrollingTimeout);
+	clearTimeout(scrollingTimeout)
 
-    scrollingTimeout = setTimeout(() => {
-        scrollings = [];
-    }, 200);
+	scrollingTimeout = setTimeout(() => {
+		scrollings = []
+	}, 200)
 
-    const scrollValue = -event.deltaY || event.detail;
-    const direction = getScrollDirection(scrollValue);
+	const scrollValue = -event.deltaY || event.detail
+	const direction = getScrollDirection(scrollValue)
 
-    if(scrollings.length > 100) { scrollings.shift(); }
+	if (scrollings.length > 100) {
+		scrollings.shift()
+	}
 
-    scrollings.push(Math.abs(scrollValue));
+	scrollings.push(Math.abs(scrollValue))
 
-    if(!checkIsAccelerating()) return;
+	if (!checkIsAccelerating()) return
 
-    return changeSectionByDirection(direction);
+	return changeSectionOrSlideByDirection(direction)
 }
 
 function checkIsAccelerating() {
-    const avarageFromEnd = getAverageFromArray(scrollings, 5);
-    const avarageFromMid = getAverageFromArray(scrollings, 50);
+	const avarageFromEnd = getAverageFromArray(scrollings, 5)
+	const avarageFromMid = getAverageFromArray(scrollings, 50)
 
-    return avarageFromEnd >= avarageFromMid;
+	return avarageFromEnd >= avarageFromMid
 }
 
 /**
@@ -60,8 +60,8 @@ function checkIsAccelerating() {
  * @param event - The WheelEvent object.
  * @returns The scroll direction, either "up" or "down".
  */
-function getScrollDirection(value: number): ScrollDirection {
-    const delta = Math.max(-1, Math.min(1, value));
+function getScrollDirection(value: number): TScrollingDirectionVertically {
+	const delta = Math.max(-1, Math.min(1, value))
 
-    return delta < 0 ? "down" : "up";
+	return delta < 0 ? 'down' : 'up'
 }

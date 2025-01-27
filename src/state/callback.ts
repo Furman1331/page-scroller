@@ -1,8 +1,6 @@
-import { onSectionChangeProps, onBeforeSectionChangeProps } from "../types";
-
 export class Callback {
-    onSectionChange: (props: onSectionChangeProps) => unknown;
-    onBeforeSectionChange: (props: onBeforeSectionChangeProps) => unknown;
+	onSectionChange: (props: ISectionChangeProps) => unknown
+	onBeforeSectionChange: (props: ISectionBeforeChangeProps) => unknown
 }
 
-export const callback = new Callback();
+export const callback = new Callback()

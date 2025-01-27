@@ -2,13 +2,11 @@ import { useLogger } from './logger'
 import { state } from './state/state'
 import { changeSectionBySpecificIndex, changeSectionByDirection, onInitialize } from './common'
 
-import type { usePageScrollerOptions, usePageScrollerReturn } from './types'
-
 import './index.css'
 
 const logger = useLogger()
 
-export function usePageScroller(options?: usePageScrollerOptions): usePageScrollerReturn {
+export function usePageScroller(options?: IPageScrollerOptions): IPageScrollerReturn {
 	function initPageScroller(selector: string) {
 		logger.info('Initializing page scroller...')
 

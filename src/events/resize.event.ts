@@ -1,52 +1,56 @@
-import { state } from "../state";
-import { useLogger } from "../logger";
-import { reAdjustCurrentSection } from "../common";
+import { state } from '../state'
+import { useLogger } from '../logger'
+import { reAdjustCurrentSection } from '../common'
 
-const logger = useLogger();
+const logger = useLogger()
 
-let timeout;
-let isResizing = false;
+let timeout
+let isResizing = false
 
 export function registerResizeEvents() {
-    onResizeHandler();
+	onResizeHandler()
 
-    window.addEventListener("resize", onResizeHandler);
+	window.addEventListener('resize', onResizeHandler)
 }
 
 export function destroyResizeEvents() {
-    setSectionsHeight();
+	resizeHandler()
 
-    clearTimeout(timeout)
+	clearTimeout(timeout)
 
-    window.removeEventListener("resize", onResizeHandler);
+	window.removeEventListener('resize', onResizeHandler)
 }
 
 function onResizeHandler() {
-    logger.info("Resize event has been triggered.");
-    if(!isResizing) {
-        setSectionsHeight(window ? window.innerHeight : document.documentElement.offsetHeight);
-    }
+	logger.info('Resize event has been triggered.')
+	if (!isResizing) {
+		resizeHandler()
+	}
 
-    isResizing = true;
+	isResizing = true
 
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-        resizeAction();
+	clearTimeout(timeout)
+	timeout = setTimeout(() => {
+		resizeAction()
 
-        isResizing = false;
-    }, 400);
+		isResizing = false
+	}, 400)
 }
 
 function resizeAction() {
-    state.isResizing = true;
+	state.isResizing = true
 
-    setSectionsHeight(window ? window.innerHeight : document.documentElement.offsetHeight);
+	resizeHandler()
 
-    reAdjustCurrentSection();
+	reAdjustCurrentSection()
 }
 
-function setSectionsHeight(value?: number) {
-    state.sections.forEach(section => {
-        section.style.height = value ? `${value}px` : "";
-    })
+function resizeHandler() {
+	const height = window ? window.innerHeight : document.documentElement.offsetHeight
+
+	setSectionsSize(height)
+}
+
+function setSectionsSize(height: number) {
+	state.sections.forEach((section) => (section.element.style.height = `${height}px`))
 }
