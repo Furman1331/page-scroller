@@ -1,5 +1,7 @@
-import { callback, state } from '../state'
-import { emitter, EmitterEvents } from '../emitter'
+import { callback, state } from '@/state'
+import { emitter, EmitterEvents } from '@/emitter'
+
+import type { IPageScrollerOptions, ISectionChangeProps, ISectionBeforeChangeProps } from '@/types'
 
 export const defaultState: IPageScrollerOptions = {
 	scrollMode: 'automatic',

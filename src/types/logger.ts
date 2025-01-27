@@ -1,6 +1,6 @@
-type TLoggerType = 'info' | 'error' | 'warn'
+export type TLoggerType = 'info' | 'error' | 'warn'
 
-interface ILogger {
+export interface ILogger {
 	info(message: string): void
 	error(message: string): void
 	warn(message: string): void

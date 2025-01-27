@@ -1,17 +1,17 @@
-type TEmitterEventType = string | symbol
+export type TEmitterEventType = string | symbol
 
-type TEmitterEventHandler<T = unknown> = (event: T) => void
-type TEmitterEventWildcardHandler<T = Record<string, unknown>> = (type: keyof T, event: T[keyof T]) => void
+export type TEmitterEventHandler<T = unknown> = (event: T) => void
+export type TEmitterEventWildcardHandler<T = Record<string, unknown>> = (type: keyof T, event: T[keyof T]) => void
 
-type TEmitterHandlerList<T = unknown> = Array<TEmitterEventHandler<T>>
-type TEmitterWildcardHandlerList<T = Record<string, unknown>> = Array<TEmitterEventWildcardHandler<T>>
+export type TEmitterHandlerList<T = unknown> = Array<TEmitterEventHandler<T>>
+export type TEmitterWildcardHandlerList<T = Record<string, unknown>> = Array<TEmitterEventWildcardHandler<T>>
 
-type IEventHandlerMap<Events extends Record<TEmitterEventType, unknown>> = Map<
+export type IEventHandlerMap<Events extends Record<TEmitterEventType, unknown>> = Map<
 	keyof Events | '*',
 	TEmitterHandlerList<Events[keyof Events]> | TEmitterWildcardHandlerList<Events>
 >
 
-interface IEmitter<Events extends Record<TEmitterEventType, unknown>> {
+export interface IEmitter<Events extends Record<TEmitterEventType, unknown>> {
 	all: IEventHandlerMap<Events>
 
 	on<Key extends keyof Events>(type: Key, handler: TEmitterEventHandler<Events[Key]>): void

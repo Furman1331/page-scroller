@@ -2,6 +2,8 @@ import { useLogger } from './logger'
 import { state } from './state/state'
 import { changeSectionBySpecificIndex, changeSectionByDirection, onInitialize } from './common'
 
+import type { IPageScrollerOptions, IPageScrollerReturn } from '@/types'
+
 import './index.css'
 
 const logger = useLogger()

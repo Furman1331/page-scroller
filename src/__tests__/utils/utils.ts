@@ -1,5 +1,7 @@
 import { usePageScroller } from '../../usePageScroller'
 
+import type { IPageScrollerOptions } from '@/types'
+
 export function initializeTest(options?: IPageScrollerOptions) {
 	document.body.innerHTML = `
         <div id="page-scoller">

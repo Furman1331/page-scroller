@@ -7,6 +7,8 @@ import { initializeDOM, destroyDOM } from './dom'
 import { destroyEvents, registerEvents } from '../events'
 import { initializeCallbacks, initializeState, destroyState, destroyCallbacks } from './state'
 
+import type { IPageScrollerOptions } from '@/types'
+
 const logger = useLogger()
 
 export function onInitialize(options?: IPageScrollerOptions) {

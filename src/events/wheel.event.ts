@@ -1,6 +1,8 @@
-import { useLogger } from '../logger'
-import { changeSectionOrSlideByDirection } from '../common'
-import { getAverageFromArray } from '../utils'
+import { useLogger } from '@/logger'
+import { getAverageFromArray } from '@/utils'
+import { changeSectionOrSlideByDirection } from '@/common'
+
+import type { TScrollingDirectionVertically } from '@/types'
 
 let scrollingTimeout
 export let scrollings = []

@@ -1,5 +1,5 @@
-import { state } from './state'
-import { emitter, EmitterEvents } from './emitter'
+import { state } from '@/state'
+import { emitter, EmitterEvents } from '@/emitter'
 
 export {
 	onDestroy,
@@ -7,7 +7,9 @@ export {
 	changeSectionByDirection,
 	changeSectionBySpecificIndex,
 	changeSlideByDirection,
-} from './common'
+} from '@/common'
+
+import type { TScrollingMode } from '@/types/scroll'
 
 export const isManualScrollingMode = (): boolean => state.scrollMode === 'manual'
 export const isAutomaticScrollingMode = (): boolean => state.scrollMode === 'automatic'
@@ -19,3 +21,5 @@ export function changeScrollingMode(mode: TScrollingMode) {
 
 	emitter.emit(mode === 'automatic' ? EmitterEvents.onPageScrollModeAutomatic : EmitterEvents.onPageScrollModeManual)
 }
+
+export const getActiveSection = (): number => state.activeSection

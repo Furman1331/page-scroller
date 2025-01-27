@@ -1,3 +1,5 @@
+import type { TScrollingMode, ISection } from '@/types'
+
 export class State {
 	container: HTMLElement | null = null
 	sections: ISection[] | null = null

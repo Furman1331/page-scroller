@@ -1,3 +1,13 @@
+import type {
+	IEmitter,
+	IEventHandlerMap,
+	TEmitterEventType,
+	TEmitterEventHandler,
+	TEmitterEventWildcardHandler,
+	TEmitterHandlerList,
+	TEmitterWildcardHandlerList,
+} from '@/types/emitter'
+
 export enum EmitterEvents {
 	onSectionChange = 'onSectionChange',
 	onBeforeSectionChange = 'onBeforeSectionChange',

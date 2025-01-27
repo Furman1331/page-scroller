@@ -1,8 +1,10 @@
-import { useLogger } from '../logger'
-import { state } from '../state/state'
-import { focusableElementsString, isUserUsingInput } from '../utils'
-import { changeSectionOrSlideByDirection, changeSectionBySpecificIndex, changeSlideByDirection } from '../common'
-import { EmitterEvents, emitter } from '../emitter'
+import { useLogger } from '@/logger'
+import { state } from '@/state/state'
+import { EmitterEvents, emitter } from '@/emitter'
+import { focusableElementsString, isUserUsingInput } from '@/utils'
+import { changeSectionOrSlideByDirection, changeSectionBySpecificIndex, changeSlideByDirection } from '@/common'
+
+import type { TSupportedKeyboardKeys } from '@/types'
 
 type FocusElementCollation = 'first' | 'last'
 

@@ -3,6 +3,8 @@ import { ClassName, SlideClassName } from '../utils/class.enum'
 
 import { EmitterEvents, emitter } from '../emitter'
 
+import type { TScrollingDirectionVertically, TScrollingDirectionHorizontally } from '@/types'
+
 export function changeSectionOrSlideByDirection(direction: TScrollingDirectionVertically) {
 	if (isAllowToChangeSlide(direction)) {
 		changeSlideByDirection(direction === 'down' ? 'right' : 'left')

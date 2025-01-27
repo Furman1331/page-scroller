@@ -1,6 +1,9 @@
-import { useLogger } from '../logger'
-import { state } from '../state/state'
-import { changeSectionOrSlideByDirection } from '../common'
+import { useLogger } from '@/logger'
+import { state } from '@/state/state'
+
+import { changeSectionOrSlideByDirection } from '@/common'
+
+import type { ICoordinates } from '@/types/event'
 
 const logger = useLogger()
 

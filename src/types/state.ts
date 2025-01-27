@@ -1,9 +1,9 @@
-interface ISection {
+export interface ISection {
 	element: HTMLElement
 	slides: ISectionSlides | null
 }
 
-interface ISectionSlides {
+export interface ISectionSlides {
 	container: HTMLElement
 	elements: HTMLElement[]
 }

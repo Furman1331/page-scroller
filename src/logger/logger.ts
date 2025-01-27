@@ -1,4 +1,6 @@
-import { state } from '../state/state'
+import { state } from '@/state/state'
+
+import type { ILogger, TLoggerType } from '@/types/logger'
 
 export function useLogger(): ILogger {
 	function info(message: string) {
