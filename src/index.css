@@ -34,6 +34,7 @@ html.page-scroller-enabled, .page-scroller-enabled body {
 }
 
 .page-scroller-slide-wrapper {
+    height: 100%;
     display: flex;
     float: left;
     position: relative;
