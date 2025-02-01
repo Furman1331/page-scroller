@@ -1,0 +1,1 @@
+{"version":3,"file":"state.d.ts","sourceRoot":"","sources":["../../src/common/state.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,oBAAoB,EAAkD,MAAM,SAAS,CAAA;AAEnG,eAAO,MAAM,YAAY,EAAE,oBAY1B,CAAA;AAED,wBAAgB,eAAe,CAAC,OAAO,EAAE,oBAAoB,QAY5D;AAED,wBAAgB,YAAY,SAoB3B;AAED,wBAAgB,mBAAmB,CAAC,OAAO,EAAE,oBAAoB,QAchE;AAED,wBAAgB,gBAAgB,SAK/B"}

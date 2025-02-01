@@ -1,0 +1,1 @@
+{"version":3,"file":"state.d.ts","sourceRoot":"","sources":["../../src/types/state.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,QAAQ;IACxB,OAAO,EAAE,WAAW,CAAA;IACpB,MAAM,EAAE,cAAc,GAAG,IAAI,CAAA;CAC7B;AAED,MAAM,WAAW,cAAc;IAC9B,SAAS,EAAE,WAAW,CAAA;IACtB,QAAQ,EAAE,WAAW,EAAE,CAAA;CACvB"}
