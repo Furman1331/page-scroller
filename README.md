@@ -148,7 +148,13 @@ const changeSectionDown = () => changeSectionByDirection("down"); // Section dow
 ```javascript
 import { changeSectionOrSlideByDirection } from "@furman1331/page-scroller";
 
-const changeSectionDown = () => changeSectionOrSlideByDirection("down"); // Section down or Slide right if available.
+const changeSectionOrSlide = () => changeSectionOrSlideByDirection("down"); // Section down or Slide right if available.
+```
+
+```javascript
+import { changeSlideByDirection } from "@furman1331/page-scroller";
+
+const changeSlide = () => changeSlideByDirection("right"); // Change slide to right if possible
 ```
 
 ```javascript
@@ -195,7 +201,7 @@ Guidelines:
 - Provide a clear description of the problem in your Pull Request (yes, it’s obvious—but still worth mentioning!).
 Thank you for your contributions! 🚀
 
-# Contributing
+# Changelog
 To see the list of recent changes, see
 [Releases section](https://github.com/Furman1331/page-scroller/releases).
 
