@@ -24,96 +24,6 @@ class Callback {
 }
 const callback = new Callback();
 
-var ClassName;
-(function (ClassName) {
-    ClassName["html"] = "page-scroller-enabled";
-    ClassName["body"] = "page-scoller-body";
-    ClassName["container"] = "page-scroller-wrapper";
-    ClassName["section"] = "page-scroller-section";
-    ClassName["sectionWithSlides"] = "page-scroller-section-with-slides";
-    ClassName["activeSection"] = "page-scroller-section-active";
-    ClassName["slide"] = "page-scroller-slide";
-})(ClassName || (ClassName = {}));
-var SlideClassName;
-(function (SlideClassName) {
-    SlideClassName["wrapper"] = "page-scroller-slide-wrapper";
-    SlideClassName["active"] = "page-scroller-slide-active";
-})(SlideClassName || (SlideClassName = {}));
-
-function initializeDOM() {
-    const htmlElement = document.querySelector('html');
-    htmlElement.classList.add(ClassName.html);
-    const bodyElement = document.querySelector('body');
-    bodyElement.classList.add(ClassName.body);
-    state.container.classList.add(ClassName.container);
-    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
-    state.container.style.transition = transition;
-    prepareSections();
-    state.scrollMode === 'automatic' ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
-}
-function prepareSections() {
-    state.sections = Array.from(state.container.children).map((element) => {
-        const section = element;
-        const childrens = Array.from(section.children);
-        const foundSlides = childrens.filter((slide) => slide.hasAttribute(state.slidesIdentifyAttribute));
-        foundSlides.forEach((slide) => slide.classList.add(ClassName.slide));
-        if (!foundSlides.length)
-            return { element: section, slides: null };
-        const container = preapreSectionForSlides(section, foundSlides);
-        const slides = { container, elements: foundSlides };
-        return { element: section, slides };
-    });
-    state.sections.forEach((section) => section.element.classList.add(ClassName.section));
-}
-function preapreSectionForSlides(section, slides) {
-    const wrapperElement = document.createElement('div');
-    wrapperElement.classList.add(SlideClassName.wrapper);
-    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
-    wrapperElement.style.transition = transition;
-    wrapperElement.style.width = `${slides.length * 100}%`;
-    slides.forEach((slide) => {
-        slide.style.width = `${100 / slides.length}%`;
-        wrapperElement.appendChild(slide);
-    });
-    const containerElement = document.createElement('div');
-    containerElement.classList.add(ClassName.sectionWithSlides);
-    containerElement.appendChild(wrapperElement);
-    section.appendChild(containerElement);
-    return wrapperElement;
-}
-function destroyDOM() {
-    const htmlElement = document.querySelector('html');
-    htmlElement.classList.remove(ClassName.html);
-    const bodyElement = document.querySelector('body');
-    bodyElement.classList.remove(ClassName.body);
-    state.container.classList.remove(ClassName.container);
-    state.container.style.transition = '';
-    state.container.style.transform = 'none';
-    state.container.style.webkitTransform = 'none';
-    state.sections.forEach((section) => section.element.classList.remove(ClassName.section));
-}
-function prepareScrollModeAutomaticDOM() {
-    const bodyElement = document.querySelector('body');
-    bodyElement.style.overflow = 'hidden';
-    bodyElement.style.height = '100%';
-    const htmlElement = document.querySelector('html');
-    htmlElement.style.overflow = 'hidden';
-    htmlElement.style.height = '100%';
-    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
-    state.container.style.transition = transition;
-}
-function prepareScrollModeManualDOM() {
-    const bodyElement = document.querySelector('body');
-    bodyElement.style.overflow = 'auto';
-    bodyElement.style.height = 'initial';
-    const htmlElement = document.querySelector('html');
-    htmlElement.style.overflow = 'auto';
-    htmlElement.style.height = 'initial';
-    state.container.style.transition = '';
-    state.container.style.transform = 'none';
-    state.container.style.webkitTransform = 'none';
-}
-
 function useLogger() {
     function info(message) {
         if (state.isDebug)
@@ -133,17 +43,22 @@ function useLogger() {
     return { info, error, warn, createMessage };
 }
 
-const focusableElementsString = `a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], summary:not([disabled]), [contenteditable]`;
-function isUserUsingInput() {
-    const activeElement = document.activeElement;
-    const supportedElements = ['input', 'textarea'];
-    return supportedElements.includes(activeElement.tagName.toLowerCase());
-}
-function getAverageFromArray(array, number) {
-    const last = array.slice(Math.max(array.length - number, 0));
-    const sum = last.reduce((acc, curr) => acc + curr, 0);
-    return Math.ceil(sum / number);
-}
+var ClassName;
+(function (ClassName) {
+    ClassName["html"] = "page-scroller-enabled";
+    ClassName["body"] = "page-scoller-body";
+    ClassName["container"] = "page-scroller-wrapper";
+    ClassName["section"] = "page-scroller-section";
+    ClassName["sectionWithSlides"] = "page-scroller-section-with-slides";
+    ClassName["activeSection"] = "page-scroller-section-active";
+    ClassName["slide"] = "page-scroller-slide";
+})(ClassName || (ClassName = {}));
+var SlideClassName;
+(function (SlideClassName) {
+    SlideClassName["wrapper"] = "page-scroller-slide-wrapper";
+    SlideClassName["wrapperDestroyed"] = "page-scroller-slide-wrapper-destroyed";
+    SlideClassName["active"] = "page-scroller-slide-active";
+})(SlideClassName || (SlideClassName = {}));
 
 function changeSectionOrSlideByDirection(direction) {
     if (isAllowToChangeSlide(direction)) {
@@ -235,104 +150,37 @@ function isAllowToChangeByIndex(index) {
     return index >= 0 && index < state.sections.length;
 }
 
-const defaultState = {
-    scrollMode: 'automatic',
-    scrollingSpeed: 700,
-    transitionTimingFunction: 'ease',
-    slidesIdentifyAttribute: 'page-scroller-slide',
-    isAllowToScrollThroughSlides: false,
-    isDebug: false,
-    isWheelEnabled: true,
-    isKeyboardEnabled: true,
-    isTouchEnabled: true,
-};
-function initializeState(options) {
-    state.scrollMode = options.scrollMode ?? defaultState.scrollMode;
-    state.scrollingSpeed = options.scrollingSpeed ?? defaultState.scrollingSpeed;
-    state.transitionTimingFunction = options.transitionTimingFunction ?? defaultState.transitionTimingFunction;
-    state.isDebug = options.isDebug ?? defaultState.isDebug;
-    state.isWheelEnabled = options.isWheelEnabled ?? defaultState.isWheelEnabled;
-    state.isKeyboardEnabled = options.isKeyboardEnabled ?? defaultState.isKeyboardEnabled;
-    state.isTouchEnabled = options.isTouchEnabled ?? defaultState.isTouchEnabled;
-    state.slidesIdentifyAttribute = options.slidesIdentifyAttribute ?? defaultState.slidesIdentifyAttribute;
-    state.isAllowToScrollThroughSlides = options.isAllowToScrollThroughSlides ?? defaultState.isAllowToScrollThroughSlides;
+const focusableElementsString = `a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], summary:not([disabled]), [contenteditable]`;
+function isUserUsingInput() {
+    const activeElement = document.activeElement;
+    const supportedElements = ['input', 'textarea'];
+    return supportedElements.includes(activeElement.tagName.toLowerCase());
 }
-function destroyState() {
-    state.container = null;
-    state.sections = null;
-    state.activeSlide = 0;
-    state.activeSection = 0;
-    state.transitionTimingFunction = defaultState.transitionTimingFunction;
-    state.scrollingSpeed = defaultState.scrollingSpeed;
-    state.slidesIdentifyAttribute = defaultState.slidesIdentifyAttribute;
-    state.isAllowToScrollThroughSlides = defaultState.isAllowToScrollThroughSlides;
-    state.isDebug = defaultState.isDebug;
-    state.isScrolling = false;
-    state.isInitialized = false;
-    state.isWheelEnabled = defaultState.isWheelEnabled;
-    state.isKeyboardEnabled = defaultState.isKeyboardEnabled;
-    state.isTouchEnabled = defaultState.isTouchEnabled;
-}
-function initializeCallbacks(options) {
-    if (options.onSectionChange) {
-        callback.onSectionChange = options.onSectionChange;
-        emitter.on(EmitterEvents.onSectionChange, (event) => callback.onSectionChange(event));
-    }
-    if (options.onBeforeSectionChange) {
-        callback.onBeforeSectionChange = options.onBeforeSectionChange;
-        emitter.on(EmitterEvents.onBeforeSectionChange, (event) => callback.onBeforeSectionChange(event));
-    }
-}
-function destroyCallbacks() {
-    callback.onSectionChange = () => { };
-    emitter.off(EmitterEvents.onSectionChange);
-    callback.onBeforeSectionChange = () => { };
-    emitter.off(EmitterEvents.onBeforeSectionChange);
-}
-
-const logger$5 = useLogger();
-function onInitialize(options) {
-    logger$5.info('Initializing Page Scroller...');
-    if (options) {
-        initializeState(options);
-        initializeCallbacks(options);
-    }
-    initializeDOM();
-    registerEvents();
-    registerEmitterEvents();
-    state.isInitialized = true;
-    logger$5.info('Initialized Page Scroller.');
-}
-function onDestroy() {
-    logger$5.warn('Destroying Page Scroller...');
-    destroyDOM();
-    destroyEvents();
-    destroyEmitterEvents();
-    destroyState();
-    destroyCallbacks();
-    state.isInitialized = false;
-    logger$5.warn('Destroyed Page Scroller.');
+function getAverageFromArray(array, number) {
+    const last = array.slice(Math.max(array.length - number, 0));
+    const sum = last.reduce((acc, curr) => acc + curr, 0);
+    return Math.ceil(sum / number);
 }
 
 let scrollingTimeout;
 let scrollings = [];
-const logger$4 = useLogger();
+const logger$5 = useLogger();
 /**
  * Registers the wheel event listener on the document body.
  */
 function registerWheelEvent() {
-    logger$4.info('Wheel event registered');
+    logger$5.info('Wheel event registered');
     document.body.addEventListener('wheel', wheelEventHandler);
 }
 /**
  * Removes the wheel event listener from the document body.
  */
 function destroyWheelEvent() {
-    logger$4.info('Wheel event registered');
+    logger$5.info('Wheel event registered');
     document.body.removeEventListener('wheel', wheelEventHandler);
 }
 function wheelEventHandler(event) {
-    logger$4.info('Wheel event detected');
+    logger$5.info('Wheel event detected');
     clearTimeout(scrollingTimeout);
     scrollingTimeout = setTimeout(() => {
         scrollings = [];
@@ -362,7 +210,7 @@ function getScrollDirection(value) {
     return delta < 0 ? 'down' : 'up';
 }
 
-const logger$3 = useLogger();
+const logger$4 = useLogger();
 let focusElementCollation = null;
 /**
  * Registers the keyboard event listeners for keyup and keydown events.
@@ -384,7 +232,7 @@ function destroyKeyboardEvents() {
  * @returns void
  */
 function keyDownEventHandler(event) {
-    logger$3.info('Keydown event detected');
+    logger$4.info('Keydown event detected');
     const key = event.key;
     if (isUserUsingInput())
         return;
@@ -448,7 +296,7 @@ function getFocusableElements(parent) {
         .filter((element) => element.getAttribute('tabindex') !== '-1' && element.offsetParent !== null);
 }
 
-const logger$2 = useLogger();
+const logger$3 = useLogger();
 function registerTouchEvents() {
     document.addEventListener('touchstart', onTouchStartHandler);
     state.container.addEventListener('touchmove', onTouchMoveHandler, { passive: false });
@@ -466,7 +314,7 @@ function onTouchStartHandler(event) {
     };
 }
 function onTouchMoveHandler(event) {
-    logger$2.info('Touch move event detected');
+    logger$3.info('Touch move event detected');
     const coordinates = getEventCoordinated(event);
     const isVerticalMovementEnought = Math.abs(coordinates.y - touchStartCoordinates.y) > (window.innerHeight / 100) * 5;
     const direction = touchStartCoordinates.y > coordinates.y ? 'down' : 'up';
@@ -478,6 +326,106 @@ function getEventCoordinated(event) {
         x: event.touches[0].pageX,
         y: event.touches[0].pageY,
     };
+}
+
+/**
+ * Registers the events for the page scroller.
+ */
+function registerEvents() {
+    if (state.scrollMode === "manual")
+        return;
+    state.isWheelEnabled && registerWheelEvent();
+    state.isKeyboardEnabled && registerKeyboardEvents();
+    state.isTouchEnabled && registerTouchEvents();
+    registerResizeEvents();
+}
+/**
+ * Destroys the events for the page scroller.
+ */
+function destroyEvents() {
+    destroyKeyboardEvents();
+    destroyWheelEvent();
+    destroyTouchEvents();
+    destroyResizeEvents();
+}
+
+const defaultState = {
+    scrollMode: 'automatic',
+    scrollingSpeed: 700,
+    transitionTimingFunction: 'ease',
+    slidesIdentifyAttribute: 'page-scroller-slide',
+    isAllowToScrollThroughSlides: false,
+    isDebug: false,
+    isWheelEnabled: true,
+    isKeyboardEnabled: true,
+    isTouchEnabled: true,
+};
+function initializeState(options) {
+    state.scrollMode = options.scrollMode ?? defaultState.scrollMode;
+    state.scrollingSpeed = options.scrollingSpeed ?? defaultState.scrollingSpeed;
+    state.transitionTimingFunction = options.transitionTimingFunction ?? defaultState.transitionTimingFunction;
+    state.isDebug = options.isDebug ?? defaultState.isDebug;
+    state.isWheelEnabled = options.isWheelEnabled ?? defaultState.isWheelEnabled;
+    state.isKeyboardEnabled = options.isKeyboardEnabled ?? defaultState.isKeyboardEnabled;
+    state.isTouchEnabled = options.isTouchEnabled ?? defaultState.isTouchEnabled;
+    state.slidesIdentifyAttribute = options.slidesIdentifyAttribute ?? defaultState.slidesIdentifyAttribute;
+    state.isAllowToScrollThroughSlides = options.isAllowToScrollThroughSlides ?? defaultState.isAllowToScrollThroughSlides;
+}
+function destroyState() {
+    state.container = null;
+    state.sections = null;
+    state.activeSlide = 0;
+    state.activeSection = 0;
+    state.transitionTimingFunction = defaultState.transitionTimingFunction;
+    state.scrollingSpeed = defaultState.scrollingSpeed;
+    state.slidesIdentifyAttribute = defaultState.slidesIdentifyAttribute;
+    state.isAllowToScrollThroughSlides = defaultState.isAllowToScrollThroughSlides;
+    state.isDebug = defaultState.isDebug;
+    state.isScrolling = false;
+    state.isInitialized = false;
+    state.isWheelEnabled = defaultState.isWheelEnabled;
+    state.isKeyboardEnabled = defaultState.isKeyboardEnabled;
+    state.isTouchEnabled = defaultState.isTouchEnabled;
+}
+function initializeCallbacks(options) {
+    if (options.onSectionChange) {
+        callback.onSectionChange = options.onSectionChange;
+        emitter.on(EmitterEvents.onSectionChange, (event) => callback.onSectionChange(event));
+    }
+    if (options.onBeforeSectionChange) {
+        callback.onBeforeSectionChange = options.onBeforeSectionChange;
+        emitter.on(EmitterEvents.onBeforeSectionChange, (event) => callback.onBeforeSectionChange(event));
+    }
+}
+function destroyCallbacks() {
+    callback.onSectionChange = () => { };
+    emitter.off(EmitterEvents.onSectionChange);
+    callback.onBeforeSectionChange = () => { };
+    emitter.off(EmitterEvents.onBeforeSectionChange);
+}
+
+const logger$2 = useLogger();
+function onInitialize(options) {
+    logger$2.info('Initializing Page Scroller...');
+    if (options) {
+        initializeState(options);
+        initializeCallbacks(options);
+    }
+    initializeDOM();
+    registerEvents();
+    registerEmitterEvents();
+    state.isInitialized = true;
+    logger$2.info('Initialized Page Scroller.');
+}
+function onDestroy() {
+    logger$2.warn('Destroying Page Scroller...');
+    destroyDOM();
+    destroyEvents();
+    destroyEmitterEvents();
+    destroyState();
+    destroyCallbacks();
+    state.isInitialized = false;
+    logger$2.warn('Destroyed Page Scroller.');
 }
 
 const logger$1 = useLogger();
@@ -514,28 +462,118 @@ function resizeHandler() {
     setSectionsSize(height);
 }
 function setSectionsSize(height) {
-    state.sections.forEach((section) => (section.element.style.height = `${height}px`));
+    state.sections.forEach((section) => {
+        const getAdjustedHeight = () => {
+            if (state.scrollMode === 'automatic')
+                return height;
+            if (!section.slides)
+                return height;
+            return height * section.slides.elements.length;
+        };
+        const adjustedHeight = getAdjustedHeight();
+        section.element.style.height = `${adjustedHeight}px`;
+    });
 }
 
-/**
- * Registers the events for the page scroller.
- */
-function registerEvents() {
-    if (state.scrollMode === "manual")
-        return;
-    state.isWheelEnabled && registerWheelEvent();
-    state.isKeyboardEnabled && registerKeyboardEvents();
-    state.isTouchEnabled && registerTouchEvents();
-    registerResizeEvents();
+function initializeDOM() {
+    const htmlElement = document.querySelector('html');
+    htmlElement.classList.add(ClassName.html);
+    const bodyElement = document.querySelector('body');
+    bodyElement.classList.add(ClassName.body);
+    state.container.classList.add(ClassName.container);
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+    state.container.style.transition = transition;
+    prepareSections();
+    state.scrollMode === 'automatic' ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
 }
-/**
- * Destroys the events for the page scroller.
- */
-function destroyEvents() {
-    destroyKeyboardEvents();
-    destroyWheelEvent();
-    destroyTouchEvents();
-    destroyResizeEvents();
+function prepareSections() {
+    state.sections = Array.from(state.container.children).map((element) => {
+        const section = element;
+        const childrens = Array.from(section.children);
+        const foundSlides = childrens.filter((slide) => slide.hasAttribute(state.slidesIdentifyAttribute));
+        foundSlides.forEach((slide) => slide.classList.add(ClassName.slide));
+        if (!foundSlides.length)
+            return { element: section, slides: null };
+        const container = preapreSectionForSlides(section, foundSlides);
+        const slides = { container, elements: foundSlides };
+        return { element: section, slides };
+    });
+    state.sections.forEach((section) => section.element.classList.add(ClassName.section));
+}
+function preapreSectionForSlides(section, slides) {
+    const wrapperElement = document.createElement('div');
+    wrapperElement.classList.add(SlideClassName.wrapper);
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+    wrapperElement.style.transition = transition;
+    wrapperElement.style.width = `${slides.length * 100}%`;
+    slides.forEach((slide) => {
+        slide.style.width = `${100 / slides.length}%`;
+        wrapperElement.appendChild(slide);
+    });
+    const containerElement = document.createElement('div');
+    containerElement.classList.add(ClassName.sectionWithSlides);
+    containerElement.appendChild(wrapperElement);
+    section.appendChild(containerElement);
+    return wrapperElement;
+}
+function destroyDOM() {
+    const htmlElement = document.querySelector('html');
+    htmlElement.classList.remove(ClassName.html);
+    const bodyElement = document.querySelector('body');
+    bodyElement.classList.remove(ClassName.body);
+    state.container.classList.remove(ClassName.container);
+    state.container.style.transition = '';
+    state.container.style.transform = 'none';
+    state.container.style.webkitTransform = 'none';
+    state.sections.forEach((section) => section.element.classList.remove(ClassName.section));
+}
+function prepareScrollModeAutomaticDOM() {
+    const bodyElement = document.querySelector('body');
+    bodyElement.style.overflow = 'hidden';
+    bodyElement.style.height = '100%';
+    const htmlElement = document.querySelector('html');
+    htmlElement.style.overflow = 'hidden';
+    htmlElement.style.height = '100%';
+    const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
+    state.container.style.transition = transition;
+}
+function prepareScrollModeManualDOM() {
+    const bodyElement = document.querySelector('body');
+    bodyElement.style.overflow = 'auto';
+    bodyElement.style.height = 'initial';
+    const htmlElement = document.querySelector('html');
+    htmlElement.style.overflow = 'auto';
+    htmlElement.style.height = 'initial';
+    state.container.style.transition = '';
+    state.container.style.transform = 'none';
+    state.container.style.webkitTransform = 'none';
+}
+function prepareScrollModeAutomaticDOMForSlides() {
+    state.sections.forEach((section) => {
+        if (!section.slides)
+            return;
+        section.slides.container.classList.remove(SlideClassName.wrapperDestroyed);
+        section.slides.container.style.width = `${section.slides.elements.length * 100}%`;
+        state.activeSlide = 0;
+        onResizeHandler();
+        section.slides.elements.forEach((element) => {
+            element.style.width = `${100 / section.slides.elements.length}%`;
+            element.style.height = null;
+        });
+    });
+}
+function prepareScrollModeManualDOMForSlides() {
+    state.sections.forEach((section) => {
+        if (!section.slides)
+            return;
+        section.slides.container.classList.add(SlideClassName.wrapperDestroyed);
+        section.slides.container.style.width = '100%';
+        section.slides.container.style.transform = 'none';
+        section.slides.elements.forEach((element) => {
+            element.style.width = '100%';
+            element.style.height = '100%';
+        });
+    });
 }
 
 var EmitterEvents;
@@ -593,10 +631,12 @@ const emitter = mitt();
 function registerEmitterEvents() {
     emitter.on(EmitterEvents.onPageScrollModeAutomatic, () => {
         prepareScrollModeAutomaticDOM();
+        prepareScrollModeAutomaticDOMForSlides();
         registerEvents();
     });
     emitter.on(EmitterEvents.onPageScrollModeManual, () => {
         prepareScrollModeManualDOM();
+        prepareScrollModeManualDOMForSlides();
         destroyEvents();
     });
 }
@@ -642,7 +682,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = "html.page-scroller-enabled, .page-scroller-enabled body {\n    margin: 0;\n    padding: 0;\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\n}\n\n.page-scoller-body {\n    height: 100%;\n    position: relative;\n}\n\n.page-scroller-wrapper {\n    height: 100%;\n    width: 100%;\n    position: relative;\n}\n\n.page-scroller-section {\n    height: 100%;\n    display: block;\n    position: relative;\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n}\n\n.page-scroller-section-with-slides {\n    z-index: 1;\n    height: 100%;\n    overflow: hidden;\n    position: relative;\n    -webkit-transition: all .3s ease-out;\n    transition: all .3s ease-out;\n}\n\n.page-scroller-slide-wrapper {\n    height: 100%;\n    display: flex;\n    float: left;\n    position: relative;\n}\n";
+var css_248z = "html.page-scroller-enabled, .page-scroller-enabled body {\n    margin: 0;\n    padding: 0;\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\n}\n\n.page-scoller-body {\n    height: 100%;\n    position: relative;\n}\n\n.page-scroller-wrapper {\n    height: 100%;\n    width: 100%;\n    position: relative;\n}\n\n.page-scroller-section {\n    height: 100%;\n    display: block;\n    position: relative;\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n}\n\n.page-scroller-section-with-slides {\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    overflow: hidden;\n    position: relative;\n    -webkit-transition: all .3s ease-out;\n    transition: all .3s ease-out;\n}\n\n.page-scroller-slide-wrapper {\n    height: 100%;\n    display: flex;\n    float: left;\n    position: relative;\n}\n\n.page-scroller-slide-wrapper-destroyed {\n    flex-direction: column;\n}\n";
 styleInject(css_248z);
 
 const logger = useLogger();

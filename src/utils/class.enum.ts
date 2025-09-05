@@ -10,5 +10,6 @@ export enum ClassName {
 
 export enum SlideClassName {
 	wrapper = 'page-scroller-slide-wrapper',
+	wrapperDestroyed = 'page-scroller-slide-wrapper-destroyed',
 	active = 'page-scroller-slide-active',
 }

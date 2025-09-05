@@ -1,5 +1,5 @@
 import { state } from '../state'
-// import { Section } from '../types'
+import { onResizeHandler } from '@/events/resize.event'
 import { ClassName, SlideClassName } from '../utils/class.enum'
 
 export function initializeDOM() {
@@ -109,4 +109,37 @@ export function prepareScrollModeManualDOM() {
 	state.container.style.transition = ''
 	state.container.style.transform = 'none'
 	state.container.style.webkitTransform = 'none'
+}
+
+export function prepareScrollModeAutomaticDOMForSlides() {
+	state.sections.forEach((section) => {
+		if (!section.slides) return
+
+		section.slides.container.classList.remove(SlideClassName.wrapperDestroyed)
+		section.slides.container.style.width = `${section.slides.elements.length * 100}%`
+
+		state.activeSlide = 0
+
+		onResizeHandler()
+
+		section.slides.elements.forEach((element) => {
+			element.style.width = `${100 / section.slides.elements.length}%`
+			element.style.height = null
+		})
+	})
+}
+
+export function prepareScrollModeManualDOMForSlides() {
+	state.sections.forEach((section) => {
+		if (!section.slides) return
+
+		section.slides.container.classList.add(SlideClassName.wrapperDestroyed)
+		section.slides.container.style.width = '100%'
+		section.slides.container.style.transform = 'none'
+
+		section.slides.elements.forEach((element) => {
+			element.style.width = '100%'
+			element.style.height = '100%'
+		})
+	})
 }

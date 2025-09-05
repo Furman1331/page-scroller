@@ -1,1 +1,1 @@
-{"version":3,"file":"events.d.ts","sourceRoot":"","sources":["../../src/emitter/events.ts"],"names":[],"mappings":"AAKA,wBAAgB,qBAAqB,SAUpC;AAED,wBAAgB,oBAAoB,SAGnC"}
+{"version":3,"file":"events.d.ts","sourceRoot":"","sources":["../../src/emitter/events.ts"],"names":[],"mappings":"AAUA,wBAAgB,qBAAqB,SAYpC;AAED,wBAAgB,oBAAoB,SAGnC"}
