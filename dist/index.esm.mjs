@@ -484,7 +484,14 @@ function initializeDOM() {
     const transition = `transform ${state.scrollingSpeed}ms ${state.transitionTimingFunction}`;
     state.container.style.transition = transition;
     prepareSections();
-    state.scrollMode === 'automatic' ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM();
+    if (state.scrollMode === 'automatic') {
+        prepareScrollModeAutomaticDOM();
+        prepareScrollModeAutomaticDOMForSlides();
+    }
+    else {
+        prepareScrollModeManualDOM();
+        prepareScrollModeManualDOMForSlides();
+    }
 }
 function prepareSections() {
     state.sections = Array.from(state.container.children).map((element) => {

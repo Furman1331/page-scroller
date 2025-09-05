@@ -16,7 +16,13 @@ export function initializeDOM() {
 
 	prepareSections()
 
-	state.scrollMode === 'automatic' ? prepareScrollModeAutomaticDOM() : prepareScrollModeManualDOM()
+	if (state.scrollMode === 'automatic') {
+		prepareScrollModeAutomaticDOM()
+		prepareScrollModeAutomaticDOMForSlides()
+	} else {
+		prepareScrollModeManualDOM()
+		prepareScrollModeManualDOMForSlides()
+	}
 }
 
 function prepareSections() {
