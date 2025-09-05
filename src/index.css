@@ -40,3 +40,7 @@ html.page-scroller-enabled, .page-scroller-enabled body {
     float: left;
     position: relative;
 }
+
+.page-scroller-slide-wrapper-destroyed {
+    flex-direction: column;
+}

@@ -9,6 +9,7 @@ export declare enum ClassName {
 }
 export declare enum SlideClassName {
     wrapper = "page-scroller-slide-wrapper",
+    wrapperDestroyed = "page-scroller-slide-wrapper-destroyed",
     active = "page-scroller-slide-active"
 }
 //# sourceMappingURL=class.enum.d.ts.map

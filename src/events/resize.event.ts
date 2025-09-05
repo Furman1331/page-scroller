@@ -21,7 +21,7 @@ export function destroyResizeEvents() {
 	window.removeEventListener('resize', onResizeHandler)
 }
 
-function onResizeHandler() {
+export function onResizeHandler() {
 	logger.info('Resize event has been triggered.')
 	if (!isResizing) {
 		resizeHandler()
@@ -52,5 +52,17 @@ function resizeHandler() {
 }
 
 function setSectionsSize(height: number) {
-	state.sections.forEach((section) => (section.element.style.height = `${height}px`))
+	state.sections.forEach((section) => {
+		const getAdjustedHeight = () => {
+			if (state.scrollMode === 'automatic') return height
+
+			if (!section.slides) return height
+
+			return height * section.slides.elements.length
+		}
+
+		const adjustedHeight = getAdjustedHeight()
+
+		section.element.style.height = `${adjustedHeight}px`
+	})
 }
